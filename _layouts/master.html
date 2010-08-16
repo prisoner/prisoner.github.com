@@ -28,19 +28,13 @@
     <div id='footer'>
       Copyright &copy; 2010 CODE4FUN &#8226; Hosted by <a href='http://github.com/prisoner/prisoner.github.com/' target='_blank'>GitHub</a> &#8226; powered by <a href='http://github.com/mojombo/jekyll'>Jekyll</a> &#8226; theme by <a href='http://mbleigh.github.com/'>Michael Bleigh</a>
     </div>
-    <script type="text/javascript">
-    //<![CDATA[
-    (function() {
-    		var links = document.getElementsByTagName('a');
-    		var query = '?';
-    		for(var i = 0; i < links.length; i++) {
-    			if(links[i].href.indexOf('#disqus_thread') >= 0) {
-    				query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
-    			}
-    		}
-    		document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/misterbleigh/get_num_replies.js' + query + '"></' + 'script>');
-    	})();
-    //]]>
-    </script>
+<script type="text/javascript">
+var disqus_shortname = 'code4fun';
+(function () {
+  var s = document.createElement('script'); s.async = true;
+  s.src = 'http://disqus.com/forums/code4fun/count.js';
+  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
   </body>
 </html>
