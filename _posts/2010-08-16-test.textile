@@ -7,7 +7,7 @@ h1. Test
 
 p. this is a test posting. "testlink":http://www.baidu.com
 
-h2. Test
+h3. Test
 
 bc. test code
 
