@@ -1,0 +1,17 @@
+---
+layout: post
+title: Test
+---
+
+h1. Test
+
+p. this is a test posting. "testlink":http://www.baidu.com
+
+h2. Test
+
+bc. test code
+
+# Numeric list
+# Numeric list
+# Numeric list
+# Numeric list
