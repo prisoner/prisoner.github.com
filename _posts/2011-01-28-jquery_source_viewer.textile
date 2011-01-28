@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Test
+title: jQuery源码查看器
 ---
 
 h1. jQuery源码查看器
-p. "传送门":http://james.padolsey.com/jquery/
+"传送门":http://james.padolsey.com/jquery/
 
