@@ -3,8 +3,6 @@ layout: post
 title: 设计模式之Observer
 ---
 
-h1. 设计模式之Observer
-
 "wikipedia":http://en.wikipedia.org/wiki/Observer_pattern
 
 bq. The *observer pattern* (a subset of the publish/subscribe pattern) is a software design pattern in which an object, called the subject, maintains a list of its dependents, called observers, and notifies them automatically of any state changes, usually by calling one of their methods. It is mainly used to implement distributed event handling systems.
@@ -13,7 +11,8 @@ p. Observer模式定义了一种一队多的依赖关系，让多个观察者对
 
 h3. c1312.Observable
 
-{% highlight javascript %} var c1312 = c1312 || {};
+{% highlight javascript %}
+var c1312 = c1312 || {};
 
 c1312.Observable = function() {
     this._observers = [];
@@ -38,7 +37,8 @@ c1312.Observable.prototype = {
 
 h3. qunit 测试
 
-{% highlight javascript %} module("c1312.Observable");
+{% highlight javascript %}
+module("c1312.Observable");
 test("c1312.Observable 测试", function() {
 
   var subject = new c1312.Observable();
