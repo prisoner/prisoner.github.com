@@ -60,6 +60,9 @@ set的主要 "操作":http://redis.io/commands#set :
   redis.sadd('set1', "set-#{i}")
 end
 
+puts redis.sismember('set1', 'set-2')
+#true
+
 puts redis.smembers('set1')
 #set-2
 #set-3
