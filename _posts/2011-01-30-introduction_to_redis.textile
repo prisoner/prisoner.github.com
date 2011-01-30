@@ -9,10 +9,11 @@ Redis的两个最大优点:
 *超级快:* 使用Redis自带的redis-benchmark工具测试, 在Linux 2.6,Xeon X3320 2.5G的机器上可以达到每秒110000次SET 81000次GET. 见 "How fast is Redis?":http://redis.io/topics/benchmarks
 *丰富的数据类型* Redis目前支持的 "数据类型":http://redis.io/topics/data-types ,
 # "Binary-safe":http://en.wikipedia.org/wiki/Binary-safe String
-#Hashe
-#List
-#Set
-#Sorted set
-Redis会在启动后将所有的数据加载到内存,这也是为什么Redis会如此快的原因之一. 但是有时候我们并不需要用到所有数据, 这样加载所有数据对内存是种巨大的浪费.
+# Hashe
+# List
+# Set
+# Sorted set
+
+p. Redis会在启动后将所有的数据加载到内存,这也是为什么Redis会如此快的原因之一. 但是有时候我们并不需要用到所有数据, 这样加载所有数据对内存是种巨大的浪费.
 Redis 2.0引进了 "Virtual Memory":http://redis.io/topics/virtual-memory 技术来避免这种情况.
 
