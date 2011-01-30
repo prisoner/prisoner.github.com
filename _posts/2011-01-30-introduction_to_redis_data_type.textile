@@ -79,6 +79,6 @@ puts redis.sinter('set1', 'set2')
 #set-4
 {% endhighlight %}
 
-* Sorted set
-* Hashe
+p. *Sorted set* (留坑)
+p. *Hashe* (留坑)
 
