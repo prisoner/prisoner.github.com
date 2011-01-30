@@ -1,0 +1,81 @@
+---
+layout: post
+title: Redis的数据类型
+---
+
+"Redis":http://redis.io/ 是一个开源的高级key-value数据库. 由 "Salvatore Sanfilippo":http://twitter.com/antirez (就算是老外,名字也够奇怪) 和 "Pieter Noordhuis":http://twitter.com/pnoordhuis 使用C开发.
+如果你使用过 "memcached":http://memcached.org/ ,就会发现两者十分相似, 但是 "Redis":http://redis.io/ 并非memcached的++, Redis不仅支持更丰富的数据结构,并且数据 "可持久化":http://redis.io/topics/persistence .
+Redis的两个最大优点:
+*超级快:* 使用Redis自带的redis-benchmark工具测试, 在Linux 2.6,Xeon X3320 2.5G的机器上可以达到每秒110000次SET 81000次GET. 见 "How fast is Redis?":http://redis.io/topics/benchmarks
+*丰富的数据类型* Redis目前支持的 "数据类型":http://redis.io/topics/data-types ,
+# "Binary-safe":http://en.wikipedia.org/wiki/Binary-safe String
+# List
+# Set
+# Sorted set
+# Hashe
+
+p. Redis会在启动后将所有的数据加载到内存,这也是为什么Redis会如此快的原因之一. 但是有时候我们并不需要用到所有数据, 这样加载所有数据对内存是种巨大的浪费. Redis 2.0引进了 "Virtual Memory":http://redis.io/topics/virtual-memory 技术来避免这种情况.
+
+p. 闲话休提, 回归正传. String就不用说它了, 说说其它四种类型
+
+p. *List:* Redis中的list是使用 "Linked list":http://en.wikipedia.org/wiki/Linked_list 实现的, 也就是说向list中添加新的数据复杂度为O(1).
+list主要 "操作":http://redis.io/commands#list :
+* "LPUSH":http://redis.io/commands/lpush 向list的左侧(头部)插入数据.
+* "RPUSH":http://redis.io/commands/rpush 向list的右侧(尾部)插入数据.
+* "LRANGE":http://redis.io/commands/lrange 取得范围内的数据
+
+{% highlight ruby %}
+5.times do |i|
+  redis.lpush('list1', "lpush-#{i}")
+end
+
+5.times do |i|
+  redis.rpush('list1', "rpush-#{i}")
+end
+
+puts redis.lrange('list1', 0, -1)
+
+#lpush-4
+#lpush-3
+#lpush-2
+#lpush-1
+#lpush-0
+#rpush-0
+#rpush-1
+#rpush-2
+#rpush-3
+#rpush-4
+
+{% endhighlight %}
+
+p. *Set:* Set是未排序的集合.
+set的主要 "操作":http://redis.io/commands#set :
+* "SADD":http://redis.io/commands/sadd 向集合中添加数据.
+* "SISMEMBER":http://redis.io/commands/sismember 判断数据是否是集合的元素.
+* "SINTER":http://redis.io/commands/sinter 对多个集合取交集.
+* "SMEMBERS":http://redis.io/commands/smembers 取得集合的所有元素.
+
+{% highlight ruby %}
+5.times do |i|
+  redis.sadd('set1', "set-#{i}")
+end
+
+puts redis.smembers('set1')
+#set-2
+#set-3
+#set-4
+#set-0
+#set-1
+
+5.times do |i|
+  redis.sadd('set2', "set-#{i + 3}")
+end
+
+puts redis.sinter('set1', 'set2')
+#set-3
+#set-4
+{% endhighlight %}
+
+* Sorted set
+* Hashe
+
