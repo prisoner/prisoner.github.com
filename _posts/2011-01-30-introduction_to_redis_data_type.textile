@@ -79,6 +79,88 @@ puts redis.sinter('set1', 'set2')
 #set-4
 {% endhighlight %}
 
-p. *Sorted set* (留坑)
-p. *Hashe* (留坑)
+p. *Sorted set* 与Set十分相似, 但是它是排序的集合.
+
+sorted set的主要 "操作":http://redis.io/commands#sorted_set :
+* "ZDD":http://redis.io/commands/zadd 类似SADD, 但是有个score参数用作排序.
+* "ZRANGE":http://redis.io/commands/zrange 取得范围内的数据, 注意结果已按照score排序
+* "ZREVRANGE":http://redis.io/commands/zrevrange 与ZRANGE一样, 但是结果顺序与ZRANGE相反
+* "ZRANGEBYSCORE":http://redis.io/commands/zrangebyscore 用score取得范围内的数据
+
+{% highlight ruby %}
+#5.times do |i|
+#  redis.zadd('sortedset1', rand(100), "sortedset-#{i}")
+#end
+
+puts redis.zrange('sortedset1', 0, -1)
+#sortedset-1
+#sortedset-3
+#sortedset-0
+#sortedset-2
+#sortedset-4
+puts redis.zrevrange('sortedset1', 0, -1, {:with_scores => true})
+#sortedset-4
+#79
+#sortedset-2
+#62
+#sortedset-0
+#38
+#sortedset-3
+#11
+#sortedset-1
+#4
+puts redis.zrangebyscore('sortedset1', 10, 90, :limit => [0, 2], :with_scores => true)
+#sortedset-3
+#11
+#sortedset-0
+#38
+{% endhighlight %}
+
+p. *Hashe* hash表结构
+
+Hashe的主要 "操作":http://redis.io/commands#hash :
+# "HSET":http://redis.io/commands/hset 对hash的field设置值
+# "HGET":http://redis.io/commands/hget 取得hash的field的值
+# "HDEL":http://redis.io/commands/hdel 删除field的值
+# "HKEYS":http://redis.io/commands/hkeys 取得hash的所有field
+# "HVALS":http://redis.io/commands/hvals 取得hash的所有的值
+# "HMGET":http://redis.io/commands/hmget 一次取得多个field的值
+
+{%highlight ruby %}
+5.times do |i|
+  redis.hset("hash1", "field#{i}", "hash-value#{i}")
+end
+
+puts redis.hkeys("hash1")
+puts '*' * 10
+redis.hdel("hash1", "field1")
+puts '*' * 10
+puts redis.hvals("hash1")
+puts '*' * 10
+puts redis.hgetall("hash1")
+puts '*' * 10
+puts redis.hget("hash1", "field2")
+puts '*' * 10
+puts redis.hmget("hash1", "field0", "field1", "field3", "field4")
+#field0
+#field1
+#field2
+#field3
+#field4
+#**********
+#**********
+#hash-value0
+#hash-value2
+#hash-value3
+#hash-value4
+#**********
+#{"field0"=>"hash-value0", "field2"=>"hash-value2", "field3"=>"hash-value3", "field4"=>"hash-value4"}
+#**********
+#hash-value2
+#**********
+#hash-value0
+#
+#hash-value3
+#hash-value4
+{% endhighlight %}
 
