@@ -1,0 +1,68 @@
+---
+layout: post
+title: Memcached的Consistent Hashing
+---
+
+在有N台 "Memcached":http://memcached.org/ 的情况下, 如何有效的将数据分布到每台server上, 在添加或移除server时如何减少对已有数据的影响.
+Memcached使用了Consistent Hashing算法来解决这些问题.
+
+h3. Consistent Hashing算法
+
+p. 详见 "Consistent hashing and random trees":http://portal.acm.org/citation.cfm?id=258660 和 "Consistent Hashing":http://en.wikipedia.org/wiki/Consistent_hashing
+
+p. Memcached的Consistent Hashing算法:
+#生成一个0~2^32-1的环
+#求出memcached server(node)的哈希值, 并将其配置到环上
+#求出数据的哈希值, 并将其配置到环上
+#将数据映射到node上. 从数据配置到的位置开始顺时针查找,将数据保存到找到的第一个node上, 如果超过2^32-1还找不到node，就保存到第0个节点
+
+!/images/post_images/2011-01-30_01.png!
+__图片来源 http://tech.idv2.com/2008/07/24/memcached-004/ __
+
+p. 注意,Memcached的Consistent Hashing算法是在客户端实现的. 另外, 有些Consistent Hashing算法的实现还使用了虚拟节点的方法来最大抑制数据的分布不均匀, 来减小服务器增减时的缓存重新分布.
+
+p. "memcached分布测试报告":http://www.javaeye.com/topic/346682
+
+p. ruby实现(https://github.com/superfeedr/consistent_hashr/blob/master/lib/consistent_hashr.rb)
+{%highlight ruby%}
+require 'zlib'
+module ConsistentHashr
+
+  @circle = {}
+  @number_of_replicas = 20
+
+  ##
+  # Computes a key
+  def self.hash_key(key)
+    Zlib.crc32("#{key}")
+  end
+
+  ##
+  # Adds a server to the circle
+  def self.add_server(_name, _server)
+    @number_of_replicas.times do |t|
+      @circle[hash_key("#{_name}+#{t}")] = _server
+    end
+  end
+
+  ##
+  # Returns the server for the provided key
+  def self.get(key)
+    return nil if @circle.empty?
+    return @circle.first.last if @circle.size == 1
+
+    hash = hash_key(key)
+
+    # If the key is there, let's return it.
+    return @circle[hash] if @circle[hash]
+
+    # If not, we need to find the next closest from it!
+    hash = @circle.keys.select() { |k| k > hash }.sort.first
+
+    return @circle.first.last if hash.nil?
+    return @circle[hash]
+  end
+
+end
+{% endhighlight %}
+
