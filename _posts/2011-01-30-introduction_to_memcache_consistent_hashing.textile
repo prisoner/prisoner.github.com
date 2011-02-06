@@ -11,10 +11,10 @@ h3. Consistent Hashing算法
 p. 详见 "Consistent hashing and random trees":http://portal.acm.org/citation.cfm?id=258660 和 "Consistent Hashing":http://en.wikipedia.org/wiki/Consistent_hashing
 
 p. Memcached的Consistent Hashing算法:
-#生成一个0~2^32-1的环
-#求出memcached server(node)的哈希值, 并将其配置到环上
-#求出数据的哈希值, 并将其配置到环上
-#将数据映射到node上. 从数据配置到的位置开始顺时针查找,将数据保存到找到的第一个node上, 如果超过2^32-1还找不到node，就保存到第0个节点
+# 生成一个0~2^32-1的环
+# 求出memcached server(node)的哈希值, 并将其配置到环上
+# 求出数据的哈希值, 并将其配置到环上
+# 将数据映射到node上. 从数据配置到的位置开始顺时针查找,将数据保存到找到的第一个node上, 如果超过2^32-1还找不到node，就保存到第0个节点
 
 !/images/post_images/2011-01-30_01.png!
 __图片来源 http://tech.idv2.com/2008/07/24/memcached-004/__
