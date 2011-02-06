@@ -17,27 +17,27 @@ p. Memcached的Consistent Hashing算法:
 #将数据映射到node上. 从数据配置到的位置开始顺时针查找,将数据保存到找到的第一个node上, 如果超过2^32-1还找不到node，就保存到第0个节点
 
 !/images/post_images/2011-01-30_01.png!
-__图片来源 http://tech.idv2.com/2008/07/24/memcached-004/ __
+__图片来源 http://tech.idv2.com/2008/07/24/memcached-004/__
 
 p. 注意,Memcached的Consistent Hashing算法是在客户端实现的. 另外, 有些Consistent Hashing算法的实现还使用了虚拟节点的方法来最大抑制数据的分布不均匀, 来减小服务器增减时的缓存重新分布.
 
 p. "memcached分布测试报告":http://www.javaeye.com/topic/346682
 
 p. ruby实现(https://github.com/superfeedr/consistent_hashr/blob/master/lib/consistent_hashr.rb)
+
 {%highlight ruby%}
+
 require 'zlib'
 module ConsistentHashr
 
   @circle = {}
   @number_of_replicas = 20
 
-  ##
   # Computes a key
   def self.hash_key(key)
     Zlib.crc32("#{key}")
   end
 
-  ##
   # Adds a server to the circle
   def self.add_server(_name, _server)
     @number_of_replicas.times do |t|
@@ -45,7 +45,6 @@ module ConsistentHashr
     end
   end
 
-  ##
   # Returns the server for the provided key
   def self.get(key)
     return nil if @circle.empty?
@@ -64,5 +63,6 @@ module ConsistentHashr
   end
 
 end
+
 {% endhighlight %}
 
