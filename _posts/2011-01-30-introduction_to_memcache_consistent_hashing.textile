@@ -11,6 +11,7 @@ h3. Consistent Hashing算法
 p. 详见 "Consistent hashing and random trees":http://portal.acm.org/citation.cfm?id=258660 和 "Consistent Hashing":http://en.wikipedia.org/wiki/Consistent_hashing
 
 p. Memcached的Consistent Hashing算法:
+
 # 生成一个0~2^32-1的环
 # 求出memcached server(node)的哈希值, 并将其配置到环上
 # 求出数据的哈希值, 并将其配置到环上
