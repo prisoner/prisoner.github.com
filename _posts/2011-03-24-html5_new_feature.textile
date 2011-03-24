@@ -1,0 +1,106 @@
+---
+layout: post
+title: HTML5的一些新特性
+---
+
+h3. Doctype
+
+p. 只需要使用
+
+{%highlight html%}
+<!DOCTYPE html>
+{% endhighlight %}
+
+p. 再也不用使用长长的永远无法记住的
+
+{%highlight html%}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0
+Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+{% endhighlight %}
+
+h3. script和link不再需要type
+
+p. 不再需要type了, 以后你可以这样写了.
+
+{%highlight html%}
+<link rel="stylesheet" href="path/to/stylesheet.css" />
+<script src="path/to/script.js"></script>
+{% endhighlight %}
+
+h3. 新的标签
+
+p. html5增加了许多更具有语义的新标签
+
+{%highlight html%}
+<section> <header> <footer> <nav> <article> <aside> <figure> <mark> <time> <meter> <progress> ...
+{% endhighlight %}
+
+p. 详细请点击 "The List Of New Features(Tag) In HTML 5":http://ntt.cc/2010/04/12/the-list-of-new-elements-tags-in-html5.html
+
+h3. 新的表单类型
+
+p. 再也不用为输入验证头痛了... 浏览器不支持怎么办? 请看 "这里":http://net.tutsplus.com/tutorials/html-css-techniques/how-to-build-cross-browser-html5-forms/
+
+{%highlight html%}
+datetime datetime-local date month week time number range email url
+{% endhighlight %}
+
+p. 可惜貌似各大浏览器都不大理会...
+
+h3. input元素的新属性
+
+** placeholder
+还记得我们如何用javascript实现文本框或文本域中的提示信息吗? 以后不需要了, html5直接就有了.
+{%highlight html%}
+<input id="name" type="text" placeholder="请输入您的用户名" size="26" />
+{% endhighlight %}
+
+** autofocus
+自动获得焦点
+{%highlight html%}
+<input id="name" type="text" placeholder="请输入您的用户名" size="26" autofocus>
+{% endhighlight %}
+
+** required
+该输入域不能为空
+{%highlight html%}
+<input id="name" type="text" placeholder="请输入您的用户名" size="26" autofocus required>
+{% endhighlight %}
+
+** pattern
+用于验证该输入域的正则表达式
+{%highlight html%}
+<input type="text" pattern="[A-Z]{3}">
+{% endhighlight %}
+
+** min max step
+用于number, date等类型的限定. max属性规定输入所允许的最大值, min规定输入允许的最小值, step规定数字间隔(step="2", 则合法的数是 ..., -2,0,2,4, ...)
+
+h3. 原生音视频支持
+
+p. 终于可以不用Flash来播放了...
+
+{%highlight html%}
+<video src=movie.ogv width=320 height=240 controls>
+</video>
+{% endhighlight %}
+
+详细请点击 "这里":http://dev.opera.com/articles/view/introduction-html5-video/
+
+h3. 画布
+
+p. HTML5非插件绘图, 使用Javascript来画图吧
+
+h3. Web Storage
+
+p. "http://prisoner.github.com/2011/03/05/html5_webstorage_api.html":http://prisoner.github.com/2011/03/05/html5_webstorage_api.html
+
+h3. web worker
+
+p. 在后台运行脚本而不阻塞用户交互. 详细请点击 "这里":http://dev.opera.com/articles/view/web-workers-rise-up/
+
+h3. postMessage
+
+p. 跨文档消息传输 "这里":http://www.whatwg.org/specs/web-apps/current-work/#crossDocumentMessages
+
