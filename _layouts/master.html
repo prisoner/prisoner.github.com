@@ -1,42 +1,30 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
-  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-
+<!doctype html>
 <html>
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <title>{{ page.title }} - CODE4FUN</title>
+    <!--[if IE]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
     <link type="application/atom+xml" title="CODE4FUN posts" rel="alternate" href="http://prisoner.github.com/atom.xml">
-    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" media="screen" charset="utf-8"/>
-    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" media="screen" charset="utf-8"/>
+    <link rel="stylesheet" href="/stylesheets/master.css"/>
+    <link rel="stylesheet" href="/stylesheets/syntax.css"/>
   </head>
   <body>
-    <div id='wrapper'>
-      <div id='header'>
-        <h1><a href='/' title="CODE4FUN">CODE4FUN</a></h1>
-        <div id='menu'>
-          <ul>
-            <li><a href='/blog.html' id='blog_link' title='Blog'>Blog</a></li>
-            <li><a href='http://www.google.com/profiles/101202661005324839860' id="about_link" target='_blank' title='About' rel='me'>About</a></li>
-            <li><a href='/' id="code_link" title='CODE4FUN'>CODE4FUN</a></li>
-          </ul>
-        </div>
-      </div>
-      <div id='content'>
-        {{ content }}
-        <div class='clearfix'></div>
-      </div>
-    </div>
-    <div id='footer'>
-      Copyright &copy; 2011 CODE4FUN &#8226; Hosted by <a href='http://github.com/prisoner/prisoner.github.com/' target='_blank'>GitHub</a> &#8226; powered by <a href='http://github.com/mojombo/jekyll'>Jekyll</a> &#8226; theme by <a href='http://mbleigh.github.com/'>Michael Bleigh</a>
-    </div>
-<script type="text/javascript">
-var disqus_shortname = 'code4fun';
-(function () {
-  var s = document.createElement('script'); s.async = true;
-  s.src = 'http://disqus.com/forums/code4fun/count.js';
-  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-}());
-</script>
+    <header class="b_title">
+      CODE4FUN
+    </header>
+    <nav>
+      <a href='/' id='blog_link'>主页</a>
+      <a href='/blog.html' id='blog_link'>文章</a>
+      <a href='http://www.google.com/profiles/101202661005324839860' id="about_link" target='_blank' title='About' rel='me'>关于</a>
+    </nav>
+    <article class="main">
+      {{ content }}
+    </article>
+    <footer>
+      Copyright &copy; 2011 CODE4FUN &#8226; Hosted by <a href='http://github.com/prisoner/prisoner.github.com/' target='_blank'>GitHub</a> &#8226; powered by <a href='http://github.com/mojombo/jekyll'>Jekyll</a>
+    </footer>
   </body>
 </html>
 

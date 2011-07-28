@@ -46,8 +46,6 @@ p. 再也不用为输入验证头痛了... 浏览器不支持怎么办? 请看 "
 datetime datetime-local date month week time number range email url
 {% endhighlight %}
 
-p. 可惜貌似各大浏览器都不大理会...
-
 h3. input元素的新属性
 
 ** placeholder
