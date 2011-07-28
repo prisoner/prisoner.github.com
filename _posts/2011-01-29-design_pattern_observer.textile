@@ -11,60 +11,9 @@ p. Observer模式定义了一种一队多的依赖关系，让多个观察者对
 
 h3. c1312.Observable
 
-{% highlight javascript %}
-var c1312 = c1312 || {};
-
-c1312.Observable = function() {
-    this._observers = [];
-}
-
-c1312.Observable.prototype = {
-  addObserver: function(o) {
-    this._observers.push(o);
-  },
-  deleteObserver: function(o) {
-   for(var i = 0; i < this._observers.length; i++ ) {
-      if(this._observers[i] == o)
-          this._observers.splice(i,1);
-    }
-  },
-  notifyObservers: function(msg) {
-    for(var i = 0; i < this._observers.length; i++ ) {
-      this._observers[i](msg);
-    }
-  }
-}{% endhighlight %}
+<script src="https://gist.github.com/1112133.js"> </script>
 
 h3. qunit 测试
 
-{% highlight javascript %}
-module("c1312.Observable");
-test("c1312.Observable 测试", function() {
-
-  var subject = new c1312.Observable();
-  var observer_count = 0;
-
-  var o1 = function(msg) {
-    observer_count ++;
-    equals(msg, 'hello', 'notifyObservers操作1');
-  }
-
-  var o2 = function(msg) {
-    observer_count ++;
-    equals(msg, 'hello', 'notifyObservers操作2');
-  }
-
-  var o3 = function(msg) {
-    observer_count ++;
-    equals(msg, 'hello', 'notifyObservers操作3');
-  }
-
-  subject.addObserver(o1);
-  subject.addObserver(o2);
-  subject.addObserver(o3);
-  subject.deleteObserver(o2);
-  subject.notifyObservers('hello');
-  equals(observer_count, 2, 'deleteObserver操作');
-
-});{% endhighlight %}
+<script src="https://gist.github.com/1112136.js"> </script>
 
