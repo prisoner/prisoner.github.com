@@ -79,7 +79,18 @@ p {
 }
 
 pre, code {
-    font: 12px 'Bitstream Vera Sans Mono','Courier',monospace;
+  font: 12px 'Bitstream Vera Sans Mono','Courier',monospace;
+}
+
+blockquote {
+  background: url("/images/blockquote-l.png") no-repeat scroll 0 0 transparent;
+  color: #666666;
+  padding-left: 40px;
+}
+
+td, th {
+  border: 1px solid #666666;
+  padding: 2px;
 }
 
 .content code, .content tt {
