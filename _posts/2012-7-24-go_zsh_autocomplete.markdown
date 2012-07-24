@@ -1,65 +1,31 @@
 ---
 layout: post
-title: Redis的数据类型
+title: oh-my-zsh下go命令自动完成
 ---
 
-# markdown 测试
+新建文件$HOME/.oh-my-zsh/completions/_go, 内容如下:
 
-## 段落
+{% highlight bash %}
+#compdef go
 
-这是一个段落1
+_arguments "1:commands:((\
+build\:'compile packages and dependencies' \
+clean\:'remove object files' \
+doc\:'run godoc on package sources' \
+env\:'print Go environment information' \
+fix\:'run go tool fix on packages' \
+fmt\:'run gofmt on package sources' \
+get\:'download and install packages and dependencies' \
+install\:'compile and install packages and dependencies' \
+list\:'list packages' \
+run\:'compile and run Go program' \
+test\:'test packages' \
+tool\:'run specified go tool' \
+version\:'print Go version' \
+vet\:'run go tool vet on packages' \
+))"
+{% endhighlight %}
 
-## 引用
+效果如下:
 
-> 这个是引用1.
-> 这个也是.
-
-## 修辞和强调
-
-__强调__ 
-*修辞*
-
-## 列表
-
-* 无序列表1
-* 无序列表2
-* 无序列表3
-
-------------------------
-
-+ list 1
-+ list 2
-+ list 3
-
-----------
-
-1. 有序列表1
-2. 有序列表2
-3. 有序列表3
-
-## 链接
-
-this is a [link1](http://www.baiduc.om "title1").
-
-![图片1](http://www.gravatar.com/avatar/e63f290c941be1f090c0afc6f9be8e6c.png "image1")
-
--------------------
-
-## 代码
-
-这是一段代码 `if (StringUtils.isEmpty(cate)) cate = "none";`
-
-这是一个代码段:
-
-    try {
-        cate = classify.classify(site, title, description);
-    } catch (IOException e) {
-    	cate = "none";
-    }
-    if (StringUtils.isEmpty(cate)) {
-    	cate = "none";
-    }
-
-s
-
-
+![自动完成效果](/images/post_images/2012-7-24-go_zsh_autocomplete.PNG)
