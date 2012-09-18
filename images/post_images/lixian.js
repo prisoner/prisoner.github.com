@@ -61,7 +61,8 @@ TLE.exporter = {
     $.each(todown.tasklist, function(n, task) {
       $.each(task.filelist, function(l, file) {
         if (!file.downurl) return;
-        console.debug(task.taskname)
+        console.debug(task.taskname);
+        taskname = task.taskname;
         str += file.downurl+'\r\n  out='+file.title+'\r\n  header=Cookie: gdriveid='+todown.gdriveid+'\r\n  continue=true\r\n  max-connection-per-server=5\r\n  split=10\r\n  parameterized-uri=true\r\n\r\n';
       });
     });
