@@ -270,6 +270,7 @@ TLE.exporter = {
     });
   };
   TLE.file_pop = function(title, content, filename) {
+    console.debug("file name is " + filename);
     var url = "data:text/html;charset=utf-8,"+encodeURIComponent(content);
     var content = '<div style="width: 100%; height: 100px;">'
                     +'<div style="padding: 30px 0 0 30%;">'
