@@ -67,7 +67,7 @@ TLE.exporter = {
       });
     });
     console.debug(taskname);
-    TLE.file_pop("Aria2导出文件下载", str, taskname + "sdffff.down");
+    TLE.file_pop("Aria2导出文件下载", str, taskname + ".down");
   },
   'IDM导出': function(todown) {
     console.log(todown);
