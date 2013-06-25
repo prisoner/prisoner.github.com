@@ -5,6 +5,12 @@
   background: #fff;
 }
 
+.post {
+  border: none !important;
+  border-bottom: 2px solid #d2d9dd !important;
+  border-radius:none !important;
+}
+
 .post.listview .header .name .label {
   background-color: #fff;
   color: gray;
