@@ -17,3 +17,8 @@
   background-color: #fff;
   color: gray;
 }
+
+.subscribe .btn-primary {
+  padding: 2px 10px !important;
+  border-radius: 2px !important;
+}
