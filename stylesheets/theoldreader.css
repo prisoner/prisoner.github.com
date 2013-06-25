@@ -1,3 +1,13 @@
-.navbar-fixed-top {
-  display:none;
+.navbar-fixed-top, .sidebar-fixed-top, .subscribe-fixed-top {
+  display: none;
+}
+
+body > .container-fluid {
+  top: 5px;
+}
+
+#main {
+  width: 100%;
+  left: 0;
+  margin: 0;
 }
