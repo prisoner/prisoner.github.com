@@ -1,4 +1,4 @@
-.navbar-fixed-top, .sidebar-fixed-top, .subscribe-fixed-top {
+.navbar-fixed-top, .sidebar-fixed-top, .subscribe-fixed-top, .page-header {
   display: none;
 }
 
@@ -10,4 +10,8 @@ body > .container-fluid {
   width: 100%;
   left: 0;
   margin: 0;
+}
+
+.reader .floating, .static .page-header {
+  display: none;
 }
