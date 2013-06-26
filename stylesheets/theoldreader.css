@@ -30,3 +30,9 @@
 .page-header {
   display:none;
 }
+
+.reader .body-fixed-top {
+  left: 0;
+  width: 100%;
+  margin: 2px;
+}
