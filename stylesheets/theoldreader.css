@@ -26,3 +26,7 @@
 .subscribe .dropdown-menu {
   min-width: 800px;
 }
+
+.page-header {
+  display:none;
+}
