@@ -2,6 +2,10 @@
   display:none;
 }
 
+button.btn.post-up, button.btn.post-down, button.btn.has-tooltip, {
+   display:none;
+}
+
 .post.listview {
   margin-bottom: 3px;
   font-size: 15px;
