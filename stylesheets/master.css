@@ -115,7 +115,7 @@ td, th {
   padding: 26px 0 0;
 }
 
-.content > ul, .content > ol {
+.content ul, .content ol {
   margin-left: 2.6em;
   margin-top: 1.5em;
 }
@@ -132,10 +132,6 @@ td, th {
   line-height: 19px;
   overflow: auto;
   padding: 6px 10px;
-}
-
-.content li {
-  margin-left: 20px;
 }
 
 footer {
