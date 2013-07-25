@@ -1,0 +1,48 @@
+.col-left {
+  display: none !important;
+}
+
+.col-right {
+  margin-left: 0 !important;
+}
+
+.feed-stream-header {
+  display: none !important;
+}
+
+.feeditem-list .feeditem-feedtitle {
+  width: 100px !important;
+}
+
+.feeditem-description {
+  color: #333333 !important;
+}
+
+.feeditem-list {
+  border-top: 1px solid #ddd !important;
+  clear: left;
+  position: relative;
+  font-size: 1.2em !important;
+}
+
+.feeditem-list .story-data {
+  margin-right: 200px !important;
+}
+
+.story-score {
+  display: none !important;
+}
+
+.feeditem-list .story-actions-container {
+  width: 200px !important;
+}
+
+.feeditem-list .feeditem-fuzzytime {
+  margin-left: 20px !important;
+  margin-right: 100px !important;
+}
+
+.story-detail-content {
+  width: 100% !important;
+  margin: 0px !important;
+}
