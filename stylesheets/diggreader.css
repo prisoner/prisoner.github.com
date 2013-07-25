@@ -1,0 +1,11 @@
+.col-left {
+  display: none !important;
+}
+
+.col-right {
+  margin-left: 0 !important;
+}
+
+.feed-stream-header {
+  display: none !important;
+}
