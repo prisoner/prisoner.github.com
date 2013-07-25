@@ -44,3 +44,8 @@ Linux Shell 的一些使用技巧
 * `python -m SimpleHTTPServer`
 
     一句话实现一个HTTP服务，把当前目录设为HTTP服务目录，可以通过http://localhost:8000访问
+
+* `ps aux | sort -k4nr | head -n 10` 或者 `top`然后按下`M` 查看linux占用内存最多的进程
+
+* `ps aux | sort -k3nr | head -n 10` 或者 `top`然后按下`P` 查看linux占用CPU最多的进程
+
