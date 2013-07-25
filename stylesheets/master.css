@@ -1,5 +1,5 @@
 body, button, input, select, textarea {
-  font: 14px/1.5 "微软雅黑", "Microsoft JhengHei", "Hiragino Sans GB", STHeiti, "黑体", Helvetica, tahoma;
+  font: 500 0.875em/1.8 Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
 }
 
 body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {
@@ -61,8 +61,6 @@ header {
 }
 
 .content {
-  font-size:14px;
-  line-height: 1.4;
   color: black;
 }
 
@@ -137,5 +135,5 @@ td, th {
 footer {
   border-top: 1px dashed #666666;
   margin-top: 15px;
+  margin-right: 10px;
 }
-
