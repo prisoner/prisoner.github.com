@@ -1,11 +1,11 @@
 ---
 layout: post
-title: 被Google送进墓地的45款产品
+title: 被Google送进墓地的41款产品
 ---
 
 ![](http://www.damndigital.com/wp-content/uploads/2013/07/damndigital_google-graveyard-45-deceased-google-products_cover_2013-07.jpg)
 
-Google的墓地 – 给曾经伟大的idea一个安身之处”。这里整整列45款产品，供大家回忆。
+Google的墓地 – 给曾经伟大的idea一个安身之处”。这里整整列41款产品，供大家回忆。
 
 1. Google SMS Search – RIP 12/5/2013
 
@@ -51,10 +51,9 @@ Google的墓地 – 给曾经伟大的idea一个安身之处”。这里整整�
 
     ![](http://www.damndigital.com/wp-content/uploads/2013/07/damndigital_google-graveyard-40-deceased-google-products_google-adSense-for-feeds.jpg)
 
-1. 
+1. Google News Badges (7/2011 – 10/15/2012)
 
-    ![](http://www.damndigital.com/wp-content/uploads/2013/07/damndigital_google-graveyard-40-deceased-google-products_<h3)Google News Badges (7/2011 – 10/15/2012)
-<p>    ![](http://www.damndigital.com/wp-content/uploads/2013/07/damndigital_google-graveyard-40-deceased-google-products_google-news-badges.jpg)
+    ![](http://www.damndigital.com/wp-content/uploads/2013/07/damndigital_google-graveyard-40-deceased-google-products_google-news-badges.jpg)
 
 1. Google Lively (7/8/2008 – 12/31/2008)
 
@@ -106,7 +105,7 @@ Google的墓地 – 给曾经伟大的idea一个安身之处”。这里整整�
 
 1. Google Code Search API (10/5/2006 – 1/15/2012)
 
-![damndigital_google-graveyard-40-deceased-google-products_google-code-search-api](http://www.damndigital.com/wp-content/uploads/2013/07/damndigital_google-graveyard-40-deceased-google-products_google-code-search-api.jpg "互动中国分享: 45款被Google送进坟墓的产品")
+    ![](http://www.damndigital.com/wp-content/uploads/2013/07/damndigital_google-graveyard-40-deceased-google-products_google-code-search-api.jpg)
 
 1. Jaiku (10/9/2007 – 1/15/2012)
 
