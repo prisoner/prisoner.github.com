@@ -5,7 +5,7 @@ title: Linux Shell 的一些使用技巧
 
 Linux Shell 的一些使用技巧
 
-常用快捷键
+常用快捷键:
 
 * Ctrl + a ：移到命令行首
 * Ctrl + e ：移到命令行尾
