@@ -134,6 +134,10 @@ td, th {
   padding: 6px 10px;
 }
 
+.content li {
+  margin-left: 20px;
+}
+
 footer {
   border-top: 1px dashed #666666;
   margin-top: 15px;
