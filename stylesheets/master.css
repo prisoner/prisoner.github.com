@@ -76,10 +76,6 @@ p {
     margin: 1em 0;
 }
 
-pre, code {
-  font: 13px "Lucida Console", "Monaco", monospace;
-}
-
 blockquote {
   background: url("/images/blockquote-l.png") no-repeat scroll 0 0 transparent;
   color: #666666;
@@ -110,11 +106,8 @@ td, th {
   margin-top: 1.5em;
 }
 
-.content > pre, .content > div.highlight {
+.content > pre.highlight, .content > div.highlight {
   margin: 20px 0 0;
-}
-
-.content .highlight pre, .content pre {
   background-color: #000;
   color: #fff;
   line-height: 19px;
