@@ -115,6 +115,12 @@ td, th {
   padding: 6px 10px;
 }
 
+code {
+  background-color: #000;
+  color: #fff;
+  padding: 0 2px;
+}
+
 footer {
   text-align: right;
   border-top: 1px dashed #666666;
