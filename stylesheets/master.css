@@ -77,7 +77,7 @@ p {
 }
 
 pre, code {
-  font: 12px 'Bitstream Vera Sans Mono','Courier',monospace;
+  font: 13px "Lucida Console", "Monaco", monospace;
 }
 
 blockquote {
@@ -89,14 +89,6 @@ blockquote {
 td, th {
   border: 1px solid #666666;
   padding: 2px;
-}
-
-.content code, .content tt {
-  background-color: #F8F8F8;
-  border: 1px solid #DEDEDE;
-  border-radius: 3px 3px 3px 3px;
-  font-size: 13px;
-  padding: 0;
 }
 
 .content h2 {
@@ -123,10 +115,8 @@ td, th {
 }
 
 .content .highlight pre, .content pre {
-  background-color: #F8F8F8;
-  border: 1px solid #CCCCCC;
-  border-radius: 3px 3px 3px 3px;
-  font-size: 13px;
+  background-color: #000;
+  color: #fff;
   line-height: 19px;
   overflow: auto;
   padding: 6px 10px;
