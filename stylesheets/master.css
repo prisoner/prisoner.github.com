@@ -106,7 +106,7 @@ td, th {
   margin-top: 1.5em;
 }
 
-.content > pre.highlight, .content > div.highlight {
+.content > pre, .content > div.highlight {
   margin: 20px 0 0;
   background-color: #000;
   color: #fff;
