@@ -79,10 +79,10 @@ Redis允许使用二进制数据的Key(binary keys) 和二进制数据的Value(b
 
 下面的Java代码用来统计某个用户操作在某天的活跃用户。
 
-<script src="https://gist.github.com/prisoner/6180999.js"></script>
+{% gist 6180999 %}
 
 下面的Java代码用来统计某个用户操作在一个指定多个日期的活跃用户。
 
-<script src="https://gist.github.com/prisoner/6181008.js"></script>
+{% gist 6181008 %}
 
 
