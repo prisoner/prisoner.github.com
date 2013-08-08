@@ -1,5 +1,5 @@
 .col-left {
-  display: none !important;
+  width:0px !important;
 }
 
 .col-right {
