@@ -45,7 +45,7 @@ public interface Runnable {
 
 ## Lambda
 
-函数式接口的重要属性是：我们能够使用lambda实例化它们，<u>Lambda</u><u>表达式</u>让你能够将函数作为方法参数，或者将代码作为数据对待。下面是Lambda的一些例子。输入在左边，代码在右边。输入类型能够被推断出来，同时是可选的。
+函数式接口的重要属性是：我们能够使用lambda实例化它们，Lambda表达式让你能够将函数作为方法参数，或者将代码作为数据对待。下面是Lambda的一些例子。输入在左边，代码在右边。输入类型能够被推断出来，同时是可选的。
 
 ```java
 (int x, int y) ->{ return x + y; }
@@ -204,6 +204,6 @@ Java 8还向很多其他的包中添加了大量其他的功能，在本文中�
 长期未兑现的StringJoiner和String.join(...)现在已经是Java 8的一部分了。
 比较器提供了一些新的方法能够用于链接和基于域的比较。默认的字符串池映射大小更大了，大约在25—50K。
 
-如果想要获取更加详细的介绍可以访问博客文章[Java 8](http://www.techempower.com/blog/2013/03/26/everything-about-java-8/)<u>全面解析</u>。该博客文章的最后一次更新时间是2013年5月29日。
+如果想要获取更加详细的介绍可以访问博客文章[Java 8全面解析](http://www.techempower.com/blog/2013/03/26/everything-about-java-8/)。该博客文章的最后一次更新时间是2013年5月29日。
 
 **查看英文原文**：[Everything About Java 8](http://www.infoq.com/news/2013/08/everything-about-java-8)
