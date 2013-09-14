@@ -77,9 +77,8 @@ h1, h2, h3, h4, h5, h6 {
   margin: 1em 0 0.2em;
 }
 
-.arel {
-  margin-top: 2em;
-  border-top: 1px dashed #666666;
+ol.all li {
+  margin-bottom: 0.2em;
 }
 
 footer {
