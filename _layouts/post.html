@@ -1,19 +1,7 @@
 ---
 layout: master
 ---
-<header class="a_title">
+<header class="title">
   <a href='{{page.url}}'>{{page.title}}</a>
 </header>
 <article class="content">{{ content }}</article>
-<section class="a_rel">
-  <header>相关文章</header>
-  <ol class="list">
-    {% for post in site.related_posts limit:3 %}
-    <li>
-      <a href='{{ post.url }}'>{{ post.title }}</a>
-      <span class="a_date">{{ post.date | date_to_string }}</span>
-    </li>
-    {% endfor %}
-  </ol>
-</section>
-

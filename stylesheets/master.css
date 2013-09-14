@@ -1,14 +1,19 @@
 body, button, input, select, textarea {
-  font: 500 0.875em/1.8 Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+  font-size: 1em;
+  font-family: Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
 }
 
-body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, pre, form, fieldset, legend, button, input, textarea, th, td {
   margin: 0;
   padding: 0;
 }
 
 a {
   text-decoration: none;
+}
+
+img {
+  max-width: 100%;
 }
 
 .clearfix:before, .clearfix:after {
@@ -24,56 +29,12 @@ a {
   zoom: 1;
 }
 
-
-nav {
-  border-bottom: 1px dashed #666666;
-  border-top: 1px dashed #666666;
-  font-size: 1.2em;
-  padding-left: 5px;
+body {
+  margin: 0 1em;
 }
 
-.b_title {
-  color: #558833;
-  font-size: 2em;
-  text-align: center;
-}
-
-.main {
-  margin:10px;
-}
-
-header {
-  font-size: 1.8em;
-}
-
-.list {
-  margin-left: 40px;
-}
-
-.a_date {
-  color: #666666;
-  font-style: italic;
-}
-
-.a_rel {
-  margin-top:20px;
-  border-top: 1px dashed #666666;
-}
-
-.content {
-  color: black;
-}
-
-.a_title {
-  border-bottom: 1px solid #CCCCCC;
-  font-size: 2em;
-  line-height: normal;
-  margin: 0;
-  padding: 0.08em 0 0;
-}
-
-p {
-    margin: 1em 0;
+hr {
+  margin: 1em 0;
 }
 
 blockquote {
@@ -82,43 +43,43 @@ blockquote {
   padding-left: 40px;
 }
 
-td, th {
-  border: 1px solid #666666;
-  padding: 2px;
+.content > table {
+  border-spacing: 0;
+  border-top: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
 }
 
-.content h2 {
-  border-top: 4px solid #CCCCCC;
-  font-size: 22px;
-  line-height: normal;
-  margin: 22px 0 0;
-  padding: 7px 0 0;
+.content > table td, .content > table th {
+  border-bottom: 1px solid #dddddd;
+  padding: 0.5em;
+  border-left: 1px solid #dddddd;
 }
 
-.content h3 {
-  font-size: 16px;
-  line-height: 26px;
-  padding: 26px 0 0;
+.header {
+  text-align: center;
+  color: green;
+  font-weight: bold;
+  font-size: 1.5em;
 }
 
-.content ul, .content ol {
-  margin-left: 2.6em;
-  margin-top: 1.5em;
+nav {
+  border-bottom: 1px dashed #666666;
+  font-size: 1.2em;
 }
 
-.content > pre, .content > div.highlight {
-  margin: 20px 0 0;
-  background-color: #000;
-  color: #fff;
-  line-height: 19px;
-  overflow: auto;
-  padding: 6px 10px;
+.title {
+  font-size: 2em;
+  border-bottom: 2px solid #666;
+  margin: 1em 0;
 }
 
-code {
-  background-color: #000;
-  color: #fff;
-  padding: 0 2px;
+h1, h2, h3, h4, h5, h6 {
+  margin: 1em 0 0.2em;
+}
+
+.arel {
+  margin-top: 2em;
+  border-top: 1px dashed #666666;
 }
 
 footer {
