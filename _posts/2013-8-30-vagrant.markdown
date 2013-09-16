@@ -60,6 +60,7 @@ box就相当于是一个环境，它一般是一个VirtualBox虚拟机的镜像�
 就可以ssh到虚拟机了.
 
 Vagrantfile有几项比较重要的配置:
+
 * config.vm.box 虚拟机使用的Box
 * config.vm.network 配置虚拟机网络连接方式
 * config.vm.forward_port 配置虚拟机端口转发
