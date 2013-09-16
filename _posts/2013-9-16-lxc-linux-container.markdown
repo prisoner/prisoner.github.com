@@ -5,14 +5,13 @@ title: LXC介绍
 
 LXC(Linux containers): Linux容器. 网上介绍都说lxc是一种虚拟化技术. 但是我觉得lxc更多的是一种资源的控制和隔离工具.
 
-> The linux containers, lxc, aims to use these new functionalities to pro-
-> vide an userspace container object which provides full resource isolation
-> and resource control for an applications or a system.
+> The linux containers, lxc, aims to use these new functionalities to provide 
+> an userspace container object which provides full resource isolation 
+> and resource control for an applications or a system. 
 
 以上是[lxc官方](https://github.com/lxc/lxc)的介绍. 可见lxc是一种将系统资源按照类型和需求分割给多个对象独立使用, 对象之间保持隔离的工具. 系统资源通常指CPU、内存、网卡、磁盘等.
 
-由于lxc并不需要对硬件进行模拟并且lxc容器与主机共享内核和一些其它资源,  这也使得lxc非常的轻量级. 
-
+由于lxc并不需要对硬件进行模拟并且lxc容器与主机共享内核和一些其它资源,  这也使得lxc非常的轻量级.
 
 使用lxc运行应用有以下好处:
 
