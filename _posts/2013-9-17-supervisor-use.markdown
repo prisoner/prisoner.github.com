@@ -12,7 +12,7 @@ Supervisor是用来管理和监控进程的工具. 有时候我们希望我们�
 
 ubuntu系统下:
 
-```shell
+```
 sudo apt-get install supervisor
 ```
 
@@ -20,7 +20,7 @@ sudo apt-get install supervisor
 
 配置文件默认为`/etc/supervisord.conf`. 如果要添加一个被管理的进程, 在该文件加入配置:
 
-```ini
+```
 [program:test]
 command=python path/to/test.py
 autostart=true
@@ -35,7 +35,8 @@ stdout_logfile=path/to/log.log
 * stdout_logfile=path/to/log.log stdout输出的日子文件
 
 配置文件更改后, 需要执行
-```shell
+
+```
 sudo supervisorctl update
 ```
 来更新配置
@@ -63,7 +64,7 @@ supervisorctl命令:
 
 配置:
 
-```ini
+```
 [inet_http_server]
 port = 127.0.0.1:9001
 username = user
