@@ -36,7 +36,7 @@ CoreOS使用systemd做为系统服务管理工具主要是因为下面几个原�
 2. 安装[Vagrant](/2013/08/30/vagrant.html)
 3. 运行:
 
-```Bash shell scripts
+```sh
 git clone https://github.com/coreos/coreos-vagrant/
 cd coreos-vagrant
 vagrant up
