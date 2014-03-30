@@ -2,6 +2,7 @@
 layout: post
 title: Go并发模式：管道和取消
 ---
+由[Air on G](http://air.googol.im/2014/03/15/go-concurrency-patterns-pipelines-and-cancellation.html)翻译.
 
 译自[](http://blog.golang.org/pipelines)[http://blog.golang.org/pipelines](http://blog.golang.org/pipelines)。
 
