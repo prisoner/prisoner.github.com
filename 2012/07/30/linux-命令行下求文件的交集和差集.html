@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <title>linux 命令行下求文件的交集和差集</title>
+  
+    <meta name="author" content="Rojazz1999">
+    <link type="application/rss+xml" rel="alternate" title="CODE4FUN posts" href="/rss.xml">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="/assets/simple/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/simple/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+
+
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+    <header class="header">
+      CODE4FUN
+    </header>
+    <nav>
+      
+        
+
+
+  <a href="/">首页</a>
+
+
+      
+        
+
+
+  <a href="/archive">文章</a>
+
+
+      
+    </nav>
+    <article class="main">
+        <header class="title">
+linux 命令行下求文件的交集和差集
+</header>
+<article class="content">
+<p>linux 命令行下求文件的交集和差集.</p>
+
+<p>file1:</p>
+
+<pre><code>a
+b
+c
+d
+</code></pre>
+
+<p>file2</p>
+
+<pre><code>c
+d
+e
+f
+</code></pre>
+
+<h3>方法1</h3>
+
+<ul>
+<li>交集 <code>sort file1.txt file2.txt | uniq -d</code></li>
+<li>差集 取在file1中但不在file2中的 <code>sort file2.txt file2.txt file1.txt | uniq -u</code></li>
+</ul>
+
+<h3>方法2</h3>
+
+<ul>
+<li>交集 <code>grep -F -v -f file1.txt file2.txt</code></li>
+<li>差集 取在file1中但不在file2中的 <code>grep -F -v -f file2.txt file1.txt</code></li>
+</ul>
+
+</article>
+    </article>
+    <footer>
+      Copyright &copy; 2014 Rojazz1999 &#8226; <a href='https://plus.google.com/u/0/101202661005324839860?rel=author' rel='me'>Google+</a> &#8226; Hosted by <a href='http://github.com/prisoner/prisoner.github.com/' target='_blank'>GitHub</a> &#8226; powered by <a href='https://github.com/wendal/gor'>gor</a>
+    </footer>
+    
+<script src="http://cdn.bootcss.com/prettify/r298/prettify.min.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+  </body>
+</html>

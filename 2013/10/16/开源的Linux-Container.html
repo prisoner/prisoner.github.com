@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <title>开源的Linux Container</title>
+  
+    <meta name="author" content="Rojazz1999">
+    <link type="application/rss+xml" rel="alternate" title="CODE4FUN posts" href="/rss.xml">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="/assets/simple/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/simple/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+
+
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+    <header class="header">
+      CODE4FUN
+    </header>
+    <nav>
+      
+        
+
+
+  <a href="/">首页</a>
+
+
+      
+        
+
+
+  <a href="/archive">文章</a>
+
+
+      
+    </nav>
+    <article class="main">
+        <header class="title">
+开源的Linux Container
+</header>
+<article class="content">
+<p>最近比较关注Linux Container技术, 了解了几个开源的Linux Container. 下面做一些简单的介绍.</p>
+
+<h3>Docker</h3>
+
+<p><img src="http://www.docker.io/static/img/docker-top-logo.png" alt="Docker" />
+</p>
+
+<p>主页: <a href="http://www.docker.io/">http://www.docker.io/</a></p>
+
+<p>Docker是一个可以将任何应用包装在LXC中运行的开源项目.  当应用被打包成Docker Image后, 部署和运维就变得极其简单. 可以使用统一的方式 来下载,启动,扩展,删除,迁移.</p>
+
+<p>Docker的常用场景:</p>
+
+<ul>
+<li>自动打包和部署应用</li>
+<li>创建轻量级的私有PASS环境</li>
+<li>自动测试和持续集成环境</li>
+<li>部署和扩展web apps, databases 和 backend services</li>
+</ul>
+
+<p>Docker使用Golang开发, 可以在github上找到它的<a href="https://github.com/dotcloud/docker/">源代码</a>.</p>
+
+<h3>Dokku</h3>
+
+<p>主页: <a href="https://github.com/progrium/dokku">https://github.com/progrium/dokku</a></p>
+
+<p>Dokku 是一个微型的 Heroku, 由 Docker 使用不多于 100 行的 Bash 编写.  完成安装后, 你就可以通过Git推送兼容Heroku 的应用到平台上运行. 该系统将使用 Heroku buildpacks 构建并在一个独立容器里运行, 最终结果就相当于是一个单机版的 Heroku.</p>
+
+<h3>Warden</h3>
+
+<p>主页: <a href="https://github.com/cloudfoundry/warden">https://github.com/cloudfoundry/warden</a></p>
+
+<p>warden是cloudfoundry的核心组件之一.   warden的主要目的是提供一种简单的API来管理被隔离的容器，这种容器可以限制CPU, 内存, 存储, 网络等等资源. warden目前只支持linux. <a href="http://blog.csdn.net/k_james/article/details/8523934">这里</a>有一篇使用介绍.</p>
+
+<h3>lmctfy</h3>
+
+<p>主页: <a href="https://github.com/google/lmctfy">https://github.com/google/lmctfy</a></p>
+
+<p>lmctfy是Google刚刚发布的Linux容器系统, 读音为lem-kut-fee. 目前项目还在密集开发中, 只提供了CPU与内存隔离. 按计划，lmctfy将提供磁盘IO和网络隔离, 名字空间, 根文件系统, 磁盘映像, 冻结层次和检查点恢复等, 规划还包括支持不同级别的服务质量, 监控和统计功能等.</p>
+
+<h3>Cells</h3>
+
+<p>主页: <a href="http://systems.cs.columbia.edu/projects/cells/">http://systems.cs.columbia.edu/projects/cells/</a></p>
+
+<p>Cells是一个用于在一个物理设备上运行多个智能手机或平板的基于LXC的项目.</p>
+
+</article>
+    </article>
+    <footer>
+      Copyright &copy; 2014 Rojazz1999 &#8226; <a href='https://plus.google.com/u/0/101202661005324839860?rel=author' rel='me'>Google+</a> &#8226; Hosted by <a href='http://github.com/prisoner/prisoner.github.com/' target='_blank'>GitHub</a> &#8226; powered by <a href='https://github.com/wendal/gor'>gor</a>
+    </footer>
+    
+<script src="http://cdn.bootcss.com/prettify/r298/prettify.min.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+  </body>
+</html>

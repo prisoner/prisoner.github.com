@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <title>Redis的数据类型</title>
+  
+    <meta name="author" content="Rojazz1999">
+    <link type="application/rss+xml" rel="alternate" title="CODE4FUN posts" href="/rss.xml">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="/assets/simple/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/simple/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+
+
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+    <header class="header">
+      CODE4FUN
+    </header>
+    <nav>
+      
+        
+
+
+  <a href="/">首页</a>
+
+
+      
+        
+
+
+  <a href="/archive">文章</a>
+
+
+      
+    </nav>
+    <article class="main">
+        <header class="title">
+Redis的数据类型
+</header>
+<article class="content">
+<p><a href="http://redis.io/">Redis</a> 是一个开源的高级key-value数据库. 由 <a href="http://twitter.com/antirez">Salvatore
+Sanfilippo</a> (就算是老外,名字也够奇怪) 和
+<a href="http://twitter.com/pnoordhuis">Pieter Noordhuis</a> 使用C开发.
+如果你使用过 <a href="http://memcached.org/">memcached</a> ,就会发现两者十分相似,
+但是 <a href="http://redis.io/">Redis</a> 并非memcached的++,
+Redis不仅支持更丰富的数据结构,并且数据
+<a href="http://redis.io/topics/persistence">可持久化</a> .
+Redis的两个最大优点:</p>
+
+<p><strong>超级快:</strong> 使用Redis自带的redis-benchmark工具测试, 在Linux 2.6,Xeon
+X3320 2.5G的机器上可以达到每秒110000次SET 81000次GET. 见 <a href="http://redis.io/topics/benchmarks">How fast is
+Redis?</a></p>
+
+<p><strong>丰富的数据类型</strong> Redis目前支持的</p>
+
+<p><a href="http://redis.io/topics/data-types">数据类型</a> ,</p>
+
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Binary-safe">Binary-safe</a> String</li>
+<li>List</li>
+<li>Set</li>
+<li>Sorted set</li>
+<li>Hashe</li>
+</ul>
+
+<p>Redis会在启动后将所有的数据加载到内存,这也是为什么Redis会如此快的原因之一.
+但是有时候我们并不需要用到所有数据,
+这样加载所有数据对内存是种巨大的浪费. Redis 2.0引进了 <a href="http://redis.io/topics/virtual-memory">Virtual
+Memory</a> 技术来避免这种情况.</p>
+
+<p>闲话休提, 回归正传. String就不用说它了, 说说其它四种类型</p>
+
+<p><strong>List:</strong> Redis中的list是使用 <a href="http://en.wikipedia.org/wiki/Linked_list">Linkedlist</a> 实现的,
+也就是说向list中添加新的数据复杂度为O(1).
+list主要 <a href="http://redis.io/commands#list">操作</a> :</p>
+
+<ul>
+<li><a href="http://redis.io/commands/lpush">LPUSH</a> 向list的左侧(头部)插入数据.</li>
+<li><a href="http://redis.io/commands/rpush">RPUSH</a> 向list的右侧(尾部)插入数据.</li>
+<li><a href="http://redis.io/commands/lrange">LRANGE</a> 取得范围内的数据</li>
+</ul>
+
+<pre><code>5.times do |i|
+  redis.lpush('list1', &quot;lpush-#{i}&quot;)
+end
+
+5.times do |i|
+  redis.rpush('list1', &quot;rpush-#{i}&quot;)
+end
+
+puts redis.lrange('list1', 0, -1)
+
+#lpush-4
+#lpush-3
+#lpush-2
+#lpush-1
+#lpush-0
+#rpush-0
+#rpush-1
+#rpush-2
+#rpush-3
+#rpush-4
+</code></pre>
+
+<p><strong>Set:</strong> Set是未排序的集合.</p>
+
+<p>set的主要 <a href="http://redis.io/commands#set">操作</a> :</p>
+
+<ul>
+<li><a href="http://redis.io/commands/sadd">SADD</a> 向集合中添加数据.</li>
+<li><a href="http://redis.io/commands/sismember">SISMEMBER</a>
+判断数据是否是集合的元素.</li>
+<li><a href="http://redis.io/commands/sinter">SINTER</a> 对多个集合取交集.</li>
+<li><a href="http://redis.io/commands/smembers">SMEMBERS</a> 取得集合的所有元素.</li>
+</ul>
+
+<pre><code>5.times do |i|
+  redis.sadd('set1', &quot;set-#{i}&quot;)
+end
+
+puts redis.sismember('set1', 'set-2')
+#true
+
+puts redis.smembers('set1')
+#set-2
+#set-3
+#set-4
+#set-0
+#set-1
+
+5.times do |i|
+  redis.sadd('set2', &quot;set-#{i + 3}&quot;)
+end
+
+puts redis.sinter('set1', 'set2')
+#set-3
+#set-4
+</code></pre>
+
+<p><strong>Sorted set</strong> 与Set十分相似, 但是它是排序的集合.</p>
+
+<p>sorted set的主要 <a href="http://redis.io/commands#sorted_set">操作</a> :</p>
+
+<ul>
+<li><a href="http://redis.io/commands/zadd">ZDD</a> 类似SADD, 但是有个score参数用作排序.</li>
+<li><a href="http://redis.io/commands/zrange">ZRANGE</a> 取得范围内的数据, 注意结果已按照score排序</li>
+<li><a href="http://redis.io/commands/zrevrange">ZREVRANGE</a> 与ZRANGE一样, 但是结果顺序与ZRANGE相反</li>
+<li><a href="http://redis.io/commands/zrangebyscore">ZRANGEBYSCORE</a> 用score取得范围内的数据</li>
+</ul>
+
+<pre><code>#5.times do |i|
+#  redis.zadd('sortedset1', rand(100), &quot;sortedset-#{i}&quot;)
+#end
+
+puts redis.zrange('sortedset1', 0, -1)
+#sortedset-1
+#sortedset-3
+#sortedset-0
+#sortedset-2
+#sortedset-4
+puts redis.zrevrange('sortedset1', 0, -1, {:with_scores =&gt; true})
+#sortedset-4
+#79
+#sortedset-2
+#62
+#sortedset-0
+#38
+#sortedset-3
+#11
+#sortedset-1
+#4
+puts redis.zrangebyscore('sortedset1', 10, 90, :limit =&gt; [0, 2], :with_scores =&gt; true)
+#sortedset-3
+#11
+#sortedset-0
+#38
+</code></pre>
+
+<p><strong>Hashe</strong> hash表结构</p>
+
+<p>Hashe的主要 <a href="http://redis.io/commands#hash">操作</a> :</p>
+
+<ul>
+<li><a href="http://redis.io/commands/hset">HSET</a> 对hash的field设置值</li>
+<li><a href="http://redis.io/commands/hget">HGET</a> 取得hash的field的值</li>
+<li><a href="http://redis.io/commands/hdel">HDEL</a> 删除field的值</li>
+<li><a href="http://redis.io/commands/hkeys">HKEYS</a> 取得hash的所有field</li>
+<li><a href="http://redis.io/commands/hvals">HVALS</a> 取得hash的所有的值</li>
+<li><a href="http://redis.io/commands/hmget">HMGET</a> 一次取得多个field的值</li>
+</ul>
+
+<pre><code>5.times do |i|
+  redis.hset(&quot;hash1&quot;, &quot;field#{i}&quot;, &quot;hash-value#{i}&quot;)
+end
+
+puts redis.hkeys(&quot;hash1&quot;)
+puts '*' * 10
+redis.hdel(&quot;hash1&quot;, &quot;field1&quot;)
+puts '*' * 10
+puts redis.hvals(&quot;hash1&quot;)
+puts '*' * 10
+puts redis.hgetall(&quot;hash1&quot;)
+puts '*' * 10
+puts redis.hget(&quot;hash1&quot;, &quot;field2&quot;)
+puts '*' * 10
+puts redis.hmget(&quot;hash1&quot;, &quot;field0&quot;, &quot;field1&quot;, &quot;field3&quot;, &quot;field4&quot;)
+#field0
+#field1
+#field2
+#field3
+#field4
+#**********
+#**********
+#hash-value0
+#hash-value2
+#hash-value3
+#hash-value4
+#**********
+#{&quot;field0&quot;=&gt;&quot;hash-value0&quot;, &quot;field2&quot;=&gt;&quot;hash-value2&quot;, &quot;field3&quot;=&gt;&quot;hash-value3&quot;, &quot;field4&quot;=&gt;&quot;hash-value4&quot;}
+#**********
+#hash-value2
+#**********
+#hash-value0
+#
+#hash-value3
+#hash-value4
+</code></pre>
+
+</article>
+    </article>
+    <footer>
+      Copyright &copy; 2014 Rojazz1999 &#8226; <a href='https://plus.google.com/u/0/101202661005324839860?rel=author' rel='me'>Google+</a> &#8226; Hosted by <a href='http://github.com/prisoner/prisoner.github.com/' target='_blank'>GitHub</a> &#8226; powered by <a href='https://github.com/wendal/gor'>gor</a>
+    </footer>
+    
+<script src="http://cdn.bootcss.com/prettify/r298/prettify.min.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+  </body>
+</html>

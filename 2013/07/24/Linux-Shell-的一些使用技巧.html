@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <title>Linux Shell 的一些使用技巧</title>
+  
+    <meta name="author" content="Rojazz1999">
+    <link type="application/rss+xml" rel="alternate" title="CODE4FUN posts" href="/rss.xml">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="/assets/simple/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/simple/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+
+
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+    <header class="header">
+      CODE4FUN
+    </header>
+    <nav>
+      
+        
+
+
+  <a href="/">首页</a>
+
+
+      
+        
+
+
+  <a href="/archive">文章</a>
+
+
+      
+    </nav>
+    <article class="main">
+        <header class="title">
+Linux Shell 的一些使用技巧
+</header>
+<article class="content">
+<p>Linux Shell 的一些使用技巧</p>
+
+<hr />
+
+<p>常用快捷键:<br />
+Ctrl + a ：移到命令行首<br />
+Ctrl + e ：移到命令行尾<br />
+Ctrl + f ：按字符前移（右向）<br />
+Ctrl + b ：按字符后移（左向）<br />
+Alt + f ：按单词前移（右向）<br />
+Alt + b ：按单词后移（左向）<br />
+Ctrl + xx：在命令行首和光标之间移动<br />
+Ctrl + u ：从光标处删除至命令行首<br />
+Ctrl + k ：从光标处删除至命令行尾<br />
+Ctrl + w ：从光标处删除至字首<br />
+Alt + d ：从光标处删除至字尾<br />
+Ctrl + d ：删除光标处的字符<br />
+Ctrl + h ：删除光标前的字符<br />
+Ctrl + y ：粘贴至光标后<br />
+Alt + c ：从光标处更改为首字母大写的单词<br />
+Alt + u ：从光标处更改为全部大写的单词<br />
+Alt + l ：从光标处更改为全部小写的单词<br />
+Ctrl + t ：交换光标处和之前的字符<br />
+Alt + t ：交换光标处和之前的单词<br />
+Alt + Backspace：与 Ctrl + w 类似，分隔符有些差别<br />
+Ctrl + l：清屏</p>
+
+<hr />
+
+<p>使用 <code>Ctrl + z</code> 快捷键可以让正在执行的命令挂起。如果要让该进程在后台执行，那么可以执行 <code>bg</code> 命令。而 <code>fg</code> 命令则可以让该进程重新回到前台来。使用 <code>jobs</code> 命令能够查看到哪些进程在后台执行。 你也可以在 <code>fg</code> 或 <code>bg</code> 命令中使用作业 id，如： <code>fg %12</code> 又如： <code>bg %37</code></p>
+
+<hr />
+
+<p>man手册</p>
+
+<ul>
+<li>使用书签来标记需要重复阅读的内容。方法为：先按m键，然后在 <code>mark:</code> 后输入标记字母，如 p。 当你需要返回先前设置的书签时，可以按<code>'</code>键（单引号）。此时会显示 <code>goto mark:</code>，输入你设置的标记符即可。</li>
+<li>在阅读man手册页时想要对命令的用法进行尝试的话，那么可以使用<code>!</code>。</li>
+</ul>
+
+<hr />
+
+<p><code>tail -f /path/to/file.log | sed '/^Finished: SUCCESS$/ q'</code>当file.log里出现Finished: SUCCESS时候就退出tail，这个命令用于实时监控并过滤log是否出现了某条记录</p>
+
+<hr />
+
+<p><code>ssh user@server bash &lt; /path/to/local/script.sh</code>在远程机器上运行一段脚本。这条命令最大的好处就是不用把脚本拷到远程机器上。</p>
+
+<hr />
+
+<p><code>vim scp://username@host//path/to/somefile</code> vim一个远程文件</p>
+
+<hr />
+
+<p><code>python -m SimpleHTTPServer</code> 一句话实现一个HTTP服务，把当前目录设为HTTP服务目录，可以通过http://localhost:8000访问</p>
+
+<hr />
+
+<p><code>ps aux | sort -k4nr | head -n 10</code> 或者 <code>top</code>然后按下<code>M</code> 查看linux占用内存最多的进程</p>
+
+<hr />
+
+<p><code>ps aux | sort -k3nr | head -n 10</code> 或者 <code>top</code>然后按下<code>P</code> 查看linux占用CPU最多的进程</p>
+
+</article>
+    </article>
+    <footer>
+      Copyright &copy; 2014 Rojazz1999 &#8226; <a href='https://plus.google.com/u/0/101202661005324839860?rel=author' rel='me'>Google+</a> &#8226; Hosted by <a href='http://github.com/prisoner/prisoner.github.com/' target='_blank'>GitHub</a> &#8226; powered by <a href='https://github.com/wendal/gor'>gor</a>
+    </footer>
+    
+<script src="http://cdn.bootcss.com/prettify/r298/prettify.min.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+  </body>
+</html>

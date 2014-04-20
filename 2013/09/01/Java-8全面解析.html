@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <title>Java 8全面解析</title>
+  
+    <meta name="author" content="Rojazz1999">
+    <link type="application/rss+xml" rel="alternate" title="CODE4FUN posts" href="/rss.xml">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="/assets/simple/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/simple/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+
+
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+    <header class="header">
+      CODE4FUN
+    </header>
+    <nav>
+      
+        
+
+
+  <a href="/">首页</a>
+
+
+      
+        
+
+
+  <a href="/archive">文章</a>
+
+
+      
+    </nav>
+    <article class="main">
+        <header class="title">
+Java 8全面解析
+</header>
+<article class="content">
+<p>转载自:<a href="http://www.infoq.com/cn/news/2013/08/everything-about-java-8">InfoQ</a></p>
+
+<p>TechEmpower是位于加利福尼亚州埃尔塞贡多的一家定制应用开发公司，该公司发表了一篇题为“<a href="http://www.techempower.com/blog/2013/03/26/everything-about-java-8/">Java 8全面解析</a>”的博客文章。该博客文章全面概括了开发者在即将到来的Java 8中所要面对的变化。下面的内容快速概括了该博客文章中的信息。如果想查看所有的细节请访问TechEmpower的博客文章。</p>
+
+<h2><a style="display: block;" name="改进接口" href="#改进接口"></a>改进接口</h2>
+
+<p>现在可以在接口中定义静态方法了。例如，<code>java.util.Comparator</code>接口中现在拥有一个静态的<code>naturalOrder</code>方法。</p>
+
+<pre><code class="java">public static &lt;T extends Comparable&lt;? super T&gt;&gt; Comparator &lt;T&gt;naturalOrder() {
+  return (Comparator&lt;T&gt;) Cmparators.NaturalOrderComparator.INSTANCE;
+}
+</code></pre>
+
+<p>还能够在接口中提供默认方法。通过该功能，程序员能够在不破坏已有的接口实现代码的前提下添加新方法。例如，java.lang.Iterable接口现在拥有一个默认的forEach方法。</p>
+
+<pre><code class="java">public default void forEach(Consumer&lt;? super T&gt; action) {
+  Objects.requireNonNull(action);
+  for (T t : this) {
+    action.accept(t);
+  }
+}
+</code></pre>
+
+<p>注意，接口不能为Object类中的任何方法提供默认的实现。</p>
+
+<h2><a style="display: block;" name="函数式接口" href="#函数式接口"></a>函数式接口</h2>
+
+<p>函数式接口是只定义了一个抽象方法的接口。Java 8引入了<a href="http://download.java.net/jdk8/docs/api/java/lang/FunctionalInterface.html">FunctionalInterface</a>注解来表明一个接口打算成为一个函数式接口。例如，java.lang.Runnable就是一个函数式接口。</p>
+
+<pre><code class="java">@FunctionalInterface
+public interface Runnable {
+  public abstract void run();
+}
+</code></pre>
+
+<p>注意，不管FunctionalInterface注解是否存在，Java编译器都会将所有满足该定义的接口看作是函数式接口。</p>
+
+<h2><a style="display: block;" name="lambda" href="#lambda"></a>Lambda</h2>
+
+<p>函数式接口的重要属性是：我们能够使用lambda实例化它们，Lambda表达式让你能够将函数作为方法参数，或者将代码作为数据对待。下面是Lambda的一些例子。输入在左边，代码在右边。输入类型能够被推断出来，同时是可选的。</p>
+
+<pre><code class="java">(int x, int y) -&gt;{ return x + y; }
+(x, y) -&gt; x + y
+x -&gt; x * x
+() -&gt; x
+x -&gt; { System.out.println(x); }
+</code></pre>
+
+<p>下面是实例化Runnable函数式接口的一个例子。</p>
+
+<pre><code class="java">Runnable r = () -&gt;{ System.out.println(&quot;Running!&quot;); }
+</code></pre>
+
+<h2><a style="display: block;" name="方法引用" href="#方法引用"></a>方法引用</h2>
+
+<p><a href="http://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">方法引用</a>
+是简洁的Lambda表达式，能够用于已经拥有名称的方法。下面是一些方法引用的例子，右边是同样效果的Lambda表达式。</p>
+
+<pre><code class="java">String::valueOf x -&gt;String.valueOf(x)
+Object::toString x -&gt;x.toString()
+x::toString () -&gt;x.toString()
+ArrayList::new () -&gt; new ArrayList&lt;&gt;()
+</code></pre>
+
+<h2><a style="display: block;" name="与捕获相对的非捕获lambda" href="#与捕获相对的非捕获lambda"></a>与捕获相对的非捕获Lambda</h2>
+
+<p>如果使用Lambda表达式访问一个在Lambda语句体外定义的非静态变量或者对象，那么它会被说成是“捕获”。
+例如，下面的Lambda会访问变量x:</p>
+
+<pre><code class="java">int x = 5;
+return y -&gt; x + y;
+</code></pre>
+
+<p>一个Lambda表达式仅能够访问final或者有效final封闭块中的局部变量和参数。</p>
+
+<h2><a style="display: block;" name="java.util.function" href="#java.util.function"></a>java.util.function</h2>
+
+<p>新版本向 <a href="http://download.java.net/jdk8/docs/api/java/util/function/package-summary.html">java.util.function</a>包中添加了很多新的函数式接口。下面是一些例子：</p>
+
+<ul>
+<li>Function<T, R>——将T作为输入，返回R作为输出</li>
+<li>Predicate<T>——将T作为输入，返回一个布尔值作为输出</li>
+<li>Consumer<T>——将T作为输入，不返回任何内容</li>
+<li>Supplier<T>——没有输入，返回T</li>
+<li>BinaryOperator<T>——将两个T作为输入，返回一个T作为输出</li>
+</ul>
+
+<h2><a style="display: block;" name="java.util.stream" href="#java.util.stream"></a>java.util.stream</h2>
+
+<p>新的 <a href="http://download.java.net/jdk8/docs/api/java/util/stream/package-summary.html">java.util.stream</a>包提供了对值流进行函数式操作的类。从一个集合中获取流的一种常见方式是：</p>
+
+<pre><code class="java">Stream&lt;T&gt; stream = collection.stream();
+</code></pre>
+
+<p>下面是一个来自于Javadocs包中的例子。</p>
+
+<pre><code class="java">intsumOfWeights = blocks.stream().filter(b -&gt;b.getColor() == RED).mapToInt(b -&gt;b.getWeight()).sum();
+</code></pre>
+
+<p>在该例子中我们首先使用了一个块集合作为流的来源，然后在流上执行了filter-map-reduce操作获取红块重量的和。
+流可以是无限的、有状态的，可以是顺序的，也可以是并行的。
+在使用流的时候，你首先需要从一些来源中获取一个流，执行一个或者多个中间操作，然后执行一个最终操作。
+中间操作包括filter、map、flatMap、peel、distinct、sorted、limit和substream。
+终止操作包括forEach、toArray、reduce、collect、min、max、count、anyMatch、allMatch、noneMatch、findFirst和findAny。
+<a href="http://download.java.net/jdk8/docs/api/java/util/stream/Collectors.html">java.util.stream.Collectors</a>是一个非常有用的实用类。
+该类实现了很多归约操作，例如将流转换成集合和聚合元素。</p>
+
+<h2><a style="display: block;" name="改进了泛型推断" href="#改进了泛型推断"></a>改进了泛型推断</h2>
+
+<p>这提升了Java编译器推断泛型和在泛型方法调用中减少显式类型参数的能力。在Java 7中，代码如下：</p>
+
+<pre><code class="java">foo(Utility.&lt;Type&gt;bar());
+Utility.&lt;Type&gt;foo().bar();
+</code></pre>
+
+<p>在Java 8中，改进后的参数和调用链推断让你能够按照下面的方式编写代码：</p>
+
+<pre><code class="java">foo(Utility.bar());
+Utility.foo().bar();
+</code></pre>
+
+<h2><a style="display: block;" name="java.time" href="#java.time"></a>java.time</h2>
+
+<p>新的日期/时间API包含在 <a href="http://download.java.net/jdk8/docs/api/java/time/package-summary.html">java.time</a>包中。所有的类都是不可变且线程安全的。日期和时间类型包括Instant、LocalDate、LocalTime、LocalDateTime和ZonedDateTime。除了日期和时间之外，还有Duration和Period类型。另外，值类型包括Month、DayOfWeek、Year、 Month、YearMonth、MonthDay、OffsetTime和OffsetDateTime。这些新的日期/时间类大部分JDBC都支持。</p>
+
+<p>新增集合API</p>
+
+<p>接口可以拥有默认函数的能力让Java 8得以向集合API中添加大量的新方法。所有的接口都提供了默认的实现，而更加有效的实现则是被添加到了具体的类中。下面是新方法的列表：</p>
+
+<ul>
+<li>Iterable.forEach(Consumer)</li>
+<li>Iterator.forEachRemaining(Consumer)</li>
+<li>Collection.removeIf(Predicate)</li>
+<li>Collection.spliterator()</li>
+<li>Collection.stream()</li>
+<li>Collection.parallelStream()</li>
+<li>List.sort(Comparator)</li>
+<li>List.replaceAll(UnaryOperator)</li>
+<li>Map.forEach(BiConsumer)</li>
+<li>Map.replaceAll(BiFunction)</li>
+<li>Map.putIfAbsent(K, V)</li>
+<li>Map.remove(Object, Object)</li>
+<li>Map.replace(K, V, V)</li>
+<li>Map.replace(K, V)</li>
+<li>Map.computeIfAbsent(K, Function)</li>
+<li>Map.computeIfPresent(K, BiFunction)</li>
+<li>Map.compute(K, BiFunction)</li>
+<li>Map.merge(K, V, BiFunction)</li>
+<li>Map.getOrDefault(Object, V)</li>
+</ul>
+
+<h2><a style="display: block;" name="新增并发api" href="#新增并发api"></a>新增并发API</h2>
+
+<p>Java 8还向并发API中添加了一些新内容，我们将会在此简要介绍其中的一部分。
+<code>ForkJoinPool.commonPool()</code>是处理所有并行流操作的结构。
+没有明确提交到某个特定池中的所有<code>ForkJoinTask</code>都将会使用通用池。
+<code>ConcurrentHashMap</code>已经被完全重写。
+<code>StampedLock</code>是一个新的锁实现，它可以作为<code>ReentrantReadWriteLock</code>的一个备选方案。
+<code>CompletableFuture</code>是<code>Future</code>接口的一个实现，它为异步任务的执行和链接提供了方法。</p>
+
+<h2><a style="display: block;" name="新增io/nio-api" href="#新增io/nio-api"></a>新增IO/NIO API</h2>
+
+<p>在Java 8中有一些新的IO/NIO方法，我们能够使用它们从文件或者输入流中获取<code>java.util.stream.Stream</code>。</p>
+
+<ul>
+<li>BufferedReader.lines()</li>
+<li>Files.list(Path)</li>
+<li>Files.walk(Path, int, FileVisitOption&hellip;)</li>
+<li>Files.walk(Path, FileVisitOption&hellip;)</li>
+<li>Files.find(Path, int, BiPredicate, FileVisitOption&hellip;)</li>
+<li>Files.lines(Path, Charset)</li>
+<li>DirectoryStream.stream()</li>
+</ul>
+
+<p>这里面有一个新的<code>UncheckedIOException</code>，它是一个继承了<code>RuntimetimeException</code>的<code>IOException</code>。
+还有一个<code>CloseableStream</code>，它是一个能够并且应该被关闭的流。</p>
+
+<h2><a style="display: block;" name="反射和注解的变化" href="#反射和注解的变化"></a>反射和注解的变化</h2>
+
+<p>通过<a href="http://types.cs.washington.edu/jsr308/">类型注解</a>，我们能够在更多的地方使用注解，
+例如像<code>List&lt;@Nullable String&gt;</code>这样的泛型参数中。
+这增强了通过静态分析工具发现错误的能力，它将增强并重定义Java内置的类型系统。</p>
+
+<h2><a style="display: block;" name="nashorn-javascript引擎" href="#nashorn-javascript引擎"></a>Nashorn JavaScript引擎</h2>
+
+<p>Nashorn是一个集成到JDK中的新的、轻量级、高性能的JavaScript实现。
+Nashorn是Rhino的继任者，它提升了性能和内存使用情况。
+它将会支持<code>javax.script API</code>，但是它并不会支持DOM/CSS，也不会包含浏览器插件API。</p>
+
+<h2><a style="display: block;" name="java.lang、java.util等其他地方的新增功能" href="#java.lang、java.util等其他地方的新增功能"></a>java.lang、java.util等其他地方的新增功能</h2>
+
+<p>Java 8还向很多其他的包中添加了大量其他的功能，在本文中我们并没有提及。
+下面是一些值得注意的内容。可以使用ThreadLocal.withInitial(Supplier)更加简洁的声明本地线程变量。
+长期未兑现的StringJoiner和String.join(&hellip;)现在已经是Java 8的一部分了。
+比较器提供了一些新的方法能够用于链接和基于域的比较。默认的字符串池映射大小更大了，大约在25—50K。</p>
+
+<p>如果想要获取更加详细的介绍可以访问博客文章<a href="http://www.techempower.com/blog/2013/03/26/everything-about-java-8/">Java 8全面解析</a>。该博客文章的最后一次更新时间是2013年5月29日。</p>
+
+<p><strong>查看英文原文</strong>：<a href="http://www.infoq.com/news/2013/08/everything-about-java-8">Everything About Java 8</a></p>
+
+</article>
+    </article>
+    <footer>
+      Copyright &copy; 2014 Rojazz1999 &#8226; <a href='https://plus.google.com/u/0/101202661005324839860?rel=author' rel='me'>Google+</a> &#8226; Hosted by <a href='http://github.com/prisoner/prisoner.github.com/' target='_blank'>GitHub</a> &#8226; powered by <a href='https://github.com/wendal/gor'>gor</a>
+    </footer>
+    
+<script src="http://cdn.bootcss.com/prettify/r298/prettify.min.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+  </body>
+</html>

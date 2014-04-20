@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <title>Linux 文件 Loop设备 LVM</title>
+  
+    <meta name="author" content="Rojazz1999">
+    <link type="application/rss+xml" rel="alternate" title="CODE4FUN posts" href="/rss.xml">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="/assets/simple/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/simple/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+
+
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+    <header class="header">
+      CODE4FUN
+    </header>
+    <nav>
+      
+        
+
+
+  <a href="/">首页</a>
+
+
+      
+        
+
+
+  <a href="/archive">文章</a>
+
+
+      
+    </nav>
+    <article class="main">
+        <header class="title">
+Linux 文件 Loop设备 LVM
+</header>
+<article class="content">
+<p>不知道标题该怎么取. 本文主要介绍在Linux下怎样将文件挂载成磁盘并且用LVM进行分区管理.</p>
+
+<h2><a style="display: block;" name="什么是loop设备" href="#什么是loop设备"></a>什么是loop设备</h2>
+
+<p>loop设备是一种伪设备. 是使用文件来模拟块设备的一种技术. 文件模拟成块设备后, 就像一个磁盘或光盘一样使用. 回环可以理解成回复重用, 在已有设备上建立文件来模拟物理块设备.</p>
+
+<h2><a style="display: block;" name="关联loop设备" href="#关联loop设备"></a>关联loop设备</h2>
+
+<p>一般在linux中会有8个loop设备. 我们可以将文件关联到这些设备上.
+查看所有的loop设备: <code>losetup -a</code>, 输出:
+<code>
+/dev/loop0: [0806]:5373954 (/mnt/var/disk/disk0.img)
+/dev/loop1: [0806]:5373955 (/mnt/var/disk/disk1.img)
+/dev/loop2: [0806]:5373956 (/mnt/var/disk/disk2.img)
+/dev/loop3: [0806]:5373957 (/mnt/var/disk/disk3.img)
+</code></p>
+
+<p>查看下一个未使用的loop设备: <code>losetup -f</code>, 输出:
+<code>
+/dev/loop4
+</code></p>
+
+<p>使用<code>dd</code>或者<code>truncate</code>创建文件. 如:
+<code>truncate -s 10M disk0.img</code>
+或者
+<code>dd if=/dev/zero of=disk0.img ibs=1M count=10</code></p>
+
+<p>然后执行:
+<code>losetup /dev/loop0 disk0.img</code>
+将文件disk0.img关联到<code>/dev/loop0</code>.</p>
+
+<p>这时候disk0.img已经可以做为块设备使用了. 我们可以将它分区,并创建文件系统, 然后挂载, 就好像使用一个普通的硬盘一样.</p>
+
+<h2><a style="display: block;" name="使用lvm管理分区" href="#使用lvm管理分区"></a>使用LVM管理分区</h2>
+
+<p>我们也可以使用LVM来管理分区.</p>
+
+<p>按照上文创建3个loop设备.
+<code>
+/dev/loop0
+/dev/loop1
+/dev/loop2
+</code></p>
+
+<h3>创建物理卷</h3>
+
+<pre><code>pvcreate /dev/loop0 /dev/loop1 /dev/loop2
+</code></pre>
+
+<h3>创建卷组</h3>
+
+<pre><code>vgcreate vg0 /dev/loop0 /dev/loop1 /dev/loop2
+</code></pre>
+
+<h3>创建逻辑卷</h3>
+
+<pre><code>lvcreate --size 20m --name lv0 vg0
+</code></pre>
+
+<p>我们现在已经有一个使用3个文件来创建的lvm逻辑卷了. 对这个逻辑卷创建文件系统并挂载后就可以像普通文件系统一样使用了.
+如果在以后的使用中觉得空间不够的话, 还可以创建新的文件并关联loop设备, 然后添加到lvm的卷组中, 并且对逻辑卷进行在线扩容. 具体可以参考LVM的使用手册.</p>
+
+</article>
+    </article>
+    <footer>
+      Copyright &copy; 2014 Rojazz1999 &#8226; <a href='https://plus.google.com/u/0/101202661005324839860?rel=author' rel='me'>Google+</a> &#8226; Hosted by <a href='http://github.com/prisoner/prisoner.github.com/' target='_blank'>GitHub</a> &#8226; powered by <a href='https://github.com/wendal/gor'>gor</a>
+    </footer>
+    
+<script src="http://cdn.bootcss.com/prettify/r298/prettify.min.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+  </body>
+</html>

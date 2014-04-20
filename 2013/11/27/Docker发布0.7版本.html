@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <title>Docker发布0.7版本</title>
+  
+    <meta name="author" content="Rojazz1999">
+    <link type="application/rss+xml" rel="alternate" title="CODE4FUN posts" href="/rss.xml">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="/assets/simple/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/simple/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+
+
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+    <header class="header">
+      CODE4FUN
+    </header>
+    <nav>
+      
+        
+
+
+  <a href="/">首页</a>
+
+
+      
+        
+
+
+  <a href="/archive">文章</a>
+
+
+      
+    </nav>
+    <article class="main">
+        <header class="title">
+Docker发布0.7版本
+</header>
+<article class="content">
+<p>轻量级容器工具Docker发布0.7版本. 新版本最大的亮点是带来了标准Linux支持, 不再需要特定的内核.</p>
+
+<p>新版本带来七个特性:</p>
+
+<ol>
+<li>标准Linux支持, 提供对Fedora, RHEL, Ubuntu, Debian, Suse, Gentoo, Arch, 等发行版的支持. 还是没有CentOS&hellip;</li>
+<li>存储驱动. 之前的版本一直使用AUFS做为存储, 但是AUFS并不在Linux内核中. 所以只有少数发行版能直接支持Docker. 新的storage driver API改变了这一现状, 实现统一的存储驱动, 包含了对三种存储方式的支持: AUFS, VFS和DeviceMapper 的支持. 正在开发包括Btrfs和ZFS.</li>
+<li>离线传输. 使用离线传输, container images可以打包迁移到其它运行机器.</li>
+<li>改善的端口映射. 支持更复杂的端口映射. 同时调整了端口映射语法.</li>
+<li>容器连接. 允许各个容器进行通信. 详细:<a href="http://docs.docker.io/en/latest/use/working_with_links_names/#links-service-discovery-for-docker">Working with Links and Names</a></li>
+<li>容器自定义名称.</li>
+<li>质量改善.</li>
+</ol>
+
+<p>详细请参考<a href="http://blog.docker.io/2013/11/docker-0-7-docker-now-runs-on-any-linux-distribution/">官方发布公告</a></p>
+
+</article>
+    </article>
+    <footer>
+      Copyright &copy; 2014 Rojazz1999 &#8226; <a href='https://plus.google.com/u/0/101202661005324839860?rel=author' rel='me'>Google+</a> &#8226; Hosted by <a href='http://github.com/prisoner/prisoner.github.com/' target='_blank'>GitHub</a> &#8226; powered by <a href='https://github.com/wendal/gor'>gor</a>
+    </footer>
+    
+<script src="http://cdn.bootcss.com/prettify/r298/prettify.min.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+  </body>
+</html>

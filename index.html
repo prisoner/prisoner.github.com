@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <title>首页</title>
+  
+    <meta name="author" content="Rojazz1999">
+    <link type="application/rss+xml" rel="alternate" title="CODE4FUN posts" href="/rss.xml">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="/assets/simple/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/simple/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+
+
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+    <header class="header">
+      CODE4FUN
+    </header>
+    <nav>
+      
+        
+  <a href="/" class="active">首页</a>
+
+
+
+
+      
+        
+
+
+  <a href="/archive">文章</a>
+
+
+      
+    </nav>
+    <article class="main">
+        
+
+<div class="post">
+  <h3 class="title">
+    <a href="/2014/04/18/%E5%B7%A5%E7%A8%8B%E5%B8%88%E5%BF%83%E9%87%8C%E7%9A%84%E7%97%9B%E5%8F%AA%E6%9C%89%E5%B7%A5%E7%A8%8B%E5%B8%88%E6%89%8D%E4%BC%9A%E6%87%82.html">工程师心里的痛只有工程师才会懂</a>
+    <span class="date">2014-04-18</span>
+  </h3>
+  <p>工程师心里的痛只有工程师才会懂</p>
+
+<p><embed src="http://player.youku.com/player.php/sid/XNjk3NTQ5ODE2/v.swf" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed></p>
+
+  <div class="more">
+    <a href="/2014/04/18/%E5%B7%A5%E7%A8%8B%E5%B8%88%E5%BF%83%E9%87%8C%E7%9A%84%E7%97%9B%E5%8F%AA%E6%9C%89%E5%B7%A5%E7%A8%8B%E5%B8%88%E6%89%8D%E4%BC%9A%E6%87%82.html" class="btn">阅读更多...</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title">
+    <a href="/2014/04/04/ElasticSearch%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A.html">ElasticSearch名词解释</a>
+    <span class="date">2014-04-04</span>
+  </h3>
+  <ul>
+<li>cluster</li>
+</ul>
+
+<p>每个cluster由一个或多个节点组成,它们共享同一个集群名.每个cluster有一个被自动选出的master节点,当该master节点挂掉的时候会被自动替换.</p>
+
+<ul>
+<li>node</li>
+</ul>
+
+<p>node是elasticsearch的运行实例.为了测试,多个node可以在同一台服务器上启动,但是通常一个服务器只放一个node.
+系统启动时,node会使用广播(或指定的多播)来发现一个现有的cluster,并且试图加入该cluster.</p>
+
+<ul>
+<li>index</li>
+</ul>
+
+<p>index有点像关系型数据库中的“database”,包含不同的type的schema映射.
+一个index是一个逻辑上的命名空间,具有一个或多个primary shards,可以拥有零个或多个replia shards.</p>
+
+<ul>
+<li>shard</li>
+</ul>
+
+<p>一个shard是一个单独的lucene实例,是被elasticsearch自动管理的底层工作单元.一个索引是包含primary或replia切片的逻辑命名空间.
+除了需要定义primary shards和replia shards的数量以外,你不需要直接指定使用的shards,你的代码中只关心index就好.
+Elasticsearch在集群中分布所有的shards,并且在添加删除节点时,自动重新分配.</p>
+
+  <div class="more">
+    <a href="/2014/04/04/ElasticSearch%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A.html" class="btn">阅读更多...</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title">
+    <a href="/2014/03/31/Golang%E8%B0%83%E7%94%A8C.html">Golang调用C</a>
+    <span class="date">2014-03-31</span>
+  </h3>
+  <p>有时候我们需要在go中调用一些使用C或者C++编写的代码. 而这些代码大多数会被编译成动态链接库的形式存在.</p>
+
+<p>本文就以Mac OS下的Go开发为例, 来测试在GO中调用C.</p>
+
+<p>首先做一个简单的动态链接库.</p>
+
+<p>hello.h</p>
+
+<pre><code class="c">#ifndef HELLO_H
+#define HELLO_H
+
+void hello(const char *name);
+
+#endif
+</code></pre>
+
+<p>hello.c</p>
+
+<pre><code class="c">#include &lt;stdio.h&gt;
+
+void hello(const char *name) {
+  printf(&quot;Hello %s!\n&quot;, name);
+}
+</code></pre>
+
+  <div class="more">
+    <a href="/2014/03/31/Golang%E8%B0%83%E7%94%A8C.html" class="btn">阅读更多...</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title">
+    <a href="/2014/03/30/Go%E5%B9%B6%E5%8F%91%E6%A8%A1%E5%BC%8F%EF%BC%9A%E7%AE%A1%E9%81%93%E5%92%8C%E5%8F%96%E6%B6%88.html">Go并发模式：管道和取消</a>
+    <span class="date">2014-03-30</span>
+  </h3>
+  <p>由<a href="http://air.googol.im/2014/03/15/go-concurrency-patterns-pipelines-and-cancellation.html">Air on G</a>翻译.</p>
+
+<p>译自[](http://blog.golang.org/pipelines)<a href="http://blog.golang.org/pipelines">http://blog.golang.org/pipelines</a>。</p>
+
+<p>这是 Go 官方 blog 的一篇文章，介绍了如何使用 Go 来编写并发程序，并按照程序的演化顺序，介绍了不同模式遇到的问题以及解决的问题。主要解释了用管道模式链接不同的线程，以及如何在某个线程取消工作时，保证所有线程以及管道资源的正常回收。</p>
+
+<p>Go 并发模式：管道和取消</p>
+
+<p>作者：Sameer Ajmani，<a href="http://blog.golang.org">blog.golang.org</a>，写于 2014 年 3 月 13 日。</p>
+
+<h3>介绍</h3>
+
+<p>Go 本身提供的并发特性，可以轻松构建用于处理流数据的管道，从而高效利用 I/O 和多核 CPU。这篇文章就展示了这种管道的例子，并关注当操作失败时要处理的一些细节，并介绍了如何干净的处理错误的技巧。</p>
+
+<h3>什么是管道？</h3>
+
+<p>Go 语言里没有明确定义管道，而只是把管道当作一类并发程序。简单来说，管道是一系列由 channel 联通的状态（stage），而每个状态是一组运行相同函数的 Goroutine。每个状态上，Goroutine</p>
+
+<ul>
+<li>通过流入（inbound）channel 接收上游的数值</li>
+<li>运行一些函数来处理接收的数据，一般会产生新的数值</li>
+<li>通过流出（outbound）channel 将数值发给下游</li>
+</ul>
+
+  <div class="more">
+    <a href="/2014/03/30/Go%E5%B9%B6%E5%8F%91%E6%A8%A1%E5%BC%8F%EF%BC%9A%E7%AE%A1%E9%81%93%E5%92%8C%E5%8F%96%E6%B6%88.html" class="btn">阅读更多...</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title">
+    <a href="/2014/03/13/Linux-%E6%96%87%E4%BB%B6-Loop%E8%AE%BE%E5%A4%87-LVM.html">Linux 文件 Loop设备 LVM</a>
+    <span class="date">2014-03-13</span>
+  </h3>
+  <p>不知道标题该怎么取. 本文主要介绍在Linux下怎样将文件挂载成磁盘并且用LVM进行分区管理.</p>
+
+<h2><a style="display: block;" name="什么是loop设备" href="#什么是loop设备"></a>什么是loop设备</h2>
+
+<p>loop设备是一种伪设备. 是使用文件来模拟块设备的一种技术. 文件模拟成块设备后, 就像一个磁盘或光盘一样使用. 回环可以理解成回复重用, 在已有设备上建立文件来模拟物理块设备.</p>
+
+<h2><a style="display: block;" name="关联loop设备" href="#关联loop设备"></a>关联loop设备</h2>
+
+<p>一般在linux中会有8个loop设备. 我们可以将文件关联到这些设备上.
+查看所有的loop设备: <code>losetup -a</code>, 输出:
+<code>
+/dev/loop0: [0806]:5373954 (/mnt/var/disk/disk0.img)
+/dev/loop1: [0806]:5373955 (/mnt/var/disk/disk1.img)
+/dev/loop2: [0806]:5373956 (/mnt/var/disk/disk2.img)
+/dev/loop3: [0806]:5373957 (/mnt/var/disk/disk3.img)
+</code></p>
+
+<p>查看下一个未使用的loop设备: <code>losetup -f</code>, 输出:
+</p>
+
+  <div class="more">
+    <a href="/2014/03/13/Linux-%E6%96%87%E4%BB%B6-Loop%E8%AE%BE%E5%A4%87-LVM.html" class="btn">阅读更多...</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title">
+    <a href="/2014/02/23/%E4%BB%80%E4%B9%88%E6%98%AFNode%EF%BC%9F.html">什么是Node？</a>
+    <span class="date">2014-02-23</span>
+  </h3>
+  <h1><a style="display: block;" name="什么是node？" href="#什么是node？"></a>什么是Node？</h1>
+
+<p>![http://img03.taobaocdn.com/tps/i3/T15q4UXa4CXXXXXXXX-320-419.jpg][1]</p>
+
+<h2><a style="display: block;" name="node不是万能药！但的确能解决一些关键问题。" href="#node不是万能药！但的确能解决一些关键问题。"></a>Node不是万能药！但的确能解决一些关键问题。</h2>
+
+<p>学习Node不是一件轻松事儿，但你所收到的回报是对得起你的付出的。因为当下Web应用开发中的诸多难题唯有JavaScript才能解决。</p>
+
+<p>作者：[Brett McLaughlin][2] ，翻译：[拔赤][3]</p>
+
+<p>原文：[What is Node?][4]</p>
+
+<h3>目录</h3>
+
+<ul>
+<li>专家们的警告！</li>
+<li>Node：几个小例子</li>
+<li>Node不是JavaScript，Node可以运行JavaScript</li>
+<li>和Node服务器的交互</li>
+<li>快速入门手册</li>
+<li>解释器之惑</li>
+<li>基于事件的Web应用</li>
+<li>Node的用武之地</li>
+</ul>
+
+  <div class="more">
+    <a href="/2014/02/23/%E4%BB%80%E4%B9%88%E6%98%AFNode%EF%BC%9F.html" class="btn">阅读更多...</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title">
+    <a href="/2013/12/30/Dockerfile%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5.html">Dockerfile最佳实践</a>
+    <span class="date">2013-12-30</span>
+  </h3>
+  <p>Dockerfile提供了一个简单的语法来构建Image. 以下是几点技巧帮助你更好的使用Dockerfile.</p>
+
+<h2><a style="display: block;" name="使用缓存" href="#使用缓存"></a>使用缓存</h2>
+
+<p>Dockerfile中的每一个操作都会提交一个更改到一个新的Image中, 并且这个Image会做为下一个操作的Base Image. 如果一个使用相同操作的Image存在, 那么这些操作不会执行, 而是直接使用这个Image.</p>
+
+<p>例如所有的Dockerfile都可以使用以下的共通代码.</p>
+
+<pre><code>FROM ubuntu
+MAINTAINER Michael Crosby &lt;michael@crosbymichael.com&gt;
+
+RUN echo &quot;deb http://archive.ubuntu.com/ubuntu precise main universe&quot; &gt; /etc/apt/sources.list
+RUN apt-get update
+RUN apt-get upgrade -y
+</code></pre>
+
+<p><em>保持通用操作在Dockerfile顶部, 以使用缓存</em></p>
+
+  <div class="more">
+    <a href="/2013/12/30/Dockerfile%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5.html" class="btn">阅读更多...</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title">
+    <a href="/2013/11/27/Docker%E5%8F%91%E5%B8%830.7%E7%89%88%E6%9C%AC.html">Docker发布0.7版本</a>
+    <span class="date">2013-11-27</span>
+  </h3>
+  <p>轻量级容器工具Docker发布0.7版本. 新版本最大的亮点是带来了标准Linux支持, 不再需要特定的内核.</p>
+
+<p>新版本带来七个特性:</p>
+
+<ol>
+<li>标准Linux支持, 提供对Fedora, RHEL, Ubuntu, Debian, Suse, Gentoo, Arch, 等发行版的支持. 还是没有CentOS&hellip;</li>
+<li>存储驱动. 之前的版本一直使用AUFS做为存储, 但是AUFS并不在Linux内核中. 所以只有少数发行版能直接支持Docker. 新的storage driver API改变了这一现状, 实现统一的存储驱动, 包含了对三种存储方式的支持: AUFS, VFS和DeviceMapper 的支持. 正在开发包括Btrfs和ZFS.</li>
+<li>离线传输. 使用离线传输, container images可以打包迁移到其它运行机器.</li>
+<li>改善的端口映射. 支持更复杂的端口映射. 同时调整了端口映射语法.</li>
+<li>容器连接. 允许各个容器进行通信. 详细:<a href="http://docs.docker.io/en/latest/use/working_with_links_names/#links-service-discovery-for-docker">Working with Links and Names</a></li>
+<li>容器自定义名称.</li>
+<li>质量改善.</li>
+</ol>
+
+<p>详细请参考<a href="http://blog.docker.io/2013/11/docker-0-7-docker-now-runs-on-any-linux-distribution/">官方发布公告</a></p>
+
+  <div class="more">
+    <a href="/2013/11/27/Docker%E5%8F%91%E5%B8%830.7%E7%89%88%E6%9C%AC.html" class="btn">阅读更多...</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title">
+    <a href="/2013/10/31/%E4%BB%80%E4%B9%88%E6%98%AFFlight%E7%BB%84%E4%BB%B6.html">什么是Flight组件</a>
+    <span class="date">2013-10-31</span>
+  </h3>
+  <p>Twitter Flight是基于组件的. 那么什么是组件了?
+组件是一块自我包含的原子的功能片段.
+一个组件由三个部分组成:</p>
+
+<ol>
+<li>组件定义</li>
+<li>组件工厂</li>
+<li>组件实例</li>
+</ol>
+
+<h2><a style="display: block;" name="组件定义" href="#组件定义"></a>组件定义</h2>
+
+<p>组件由一个命名方法定义. 包括定义事件监听器, 触发器, 默认配置和私有方法.
+组件没有public的方法或成员变量. 所有与外界的交互使用事件来完成.</p>
+
+<pre><code class="js">function heartbeat () {
+  this.defaultAttrs({
+    bpm: 80
+  });
+  this.beat = function () {
+    this.trigger('heartbeat'); // trigger heartbeat event
+  };
+  this.after('initialize', function () {
+    setInterval(this.beat.bind(this), 60000/bpm);
+  });
+}
+</code></pre>
+
+  <div class="more">
+    <a href="/2013/10/31/%E4%BB%80%E4%B9%88%E6%98%AFFlight%E7%BB%84%E4%BB%B6.html" class="btn">阅读更多...</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title">
+    <a href="/2013/10/29/%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%9A%84%E7%94%9F%E6%88%90%E7%BB%86%E8%8A%82%E5%92%8C%E5%8E%9F%E7%90%86.html">二维码的生成细节和原理</a>
+    <span class="date">2013-10-29</span>
+  </h3>
+  <p>二维码又称QR Code，QR全称Quick Response，是一个近几年来移动设备上超流行的一种编码方式，它比传统的Bar Code条形码能存更多的信息，也能表示更多的数据类型：比如：字符，数字，日文，中文等等。这两天学习了一下二维码图片生成的相关细节，觉得这个玩意就是一个密码算法，在此写一这篇文章 ，揭露一下。供好学的人一同学习之。</p>
+
+<p>关于QR Code Specification，可参看这个PDF：<a href="http://raidenii.net/files/datasheets/misc/qr_code.pdf">http://raidenii.net/files/datasheets/misc/qr_code.pdf&nbsp;</a></p>
+
+<h4>基础知识</h4>
+
+<p>首先，我们先说一下二维码一共有40个尺寸。官方叫版本Version。Version 1是21 x 21的矩阵，Version 2是 25 x 25的矩阵，Version 3是29的尺寸，每增加一个version，就会增加4的尺寸，公式是：(V-1)*4 + 21（V是版本号） 最高Version 40，(40-1)*4+21 = 177，所以最高是177 x 177 的正方形。</p>
+
+<p>下面我们看看一个二维码的样例：</p>
+
+<p><img src="http://coolshell.cn//wp-content/uploads/2013/10/QR-Code-Overview.jpeg" alt="" />
+</p>
+
+<p><span id="more-10590"></span></p>
+
+<h5>定位图案</h5>
+
+<ul>
+<li><p>Position Detection Pattern是定位图案，用于标记二维码的矩形大小。这三个定位图案有白边叫Separators for Postion Detection Patterns。之所以三个而不是四个意思就是三个就可以标识一个矩形了。</p></li>
+
+<li><p>Timing Patterns也是用于定位的。原因是二维码有40种尺寸，尺寸过大了后需要有根标准线，不然扫描的时候可能会扫歪了。</p></li>
+</ul>
+
+  <div class="more">
+    <a href="/2013/10/29/%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%9A%84%E7%94%9F%E6%88%90%E7%BB%86%E8%8A%82%E5%92%8C%E5%8E%9F%E7%90%86.html" class="btn">阅读更多...</a>
+  </div>
+</div>
+
+
+    </article>
+    <footer>
+      Copyright &copy; 2014 Rojazz1999 &#8226; <a href='https://plus.google.com/u/0/101202661005324839860?rel=author' rel='me'>Google+</a> &#8226; Hosted by <a href='http://github.com/prisoner/prisoner.github.com/' target='_blank'>GitHub</a> &#8226; powered by <a href='https://github.com/wendal/gor'>gor</a>
+    </footer>
+    
+<script src="http://cdn.bootcss.com/prettify/r298/prettify.min.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+  </body>
+</html>

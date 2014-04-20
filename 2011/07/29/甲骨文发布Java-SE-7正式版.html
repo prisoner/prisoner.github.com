@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <title>甲骨文发布Java SE 7正式版</title>
+  
+    <meta name="author" content="Rojazz1999">
+    <link type="application/rss+xml" rel="alternate" title="CODE4FUN posts" href="/rss.xml">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="/assets/simple/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/simple/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+
+
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+    <header class="header">
+      CODE4FUN
+    </header>
+    <nav>
+      
+        
+
+
+  <a href="/">首页</a>
+
+
+      
+        
+
+
+  <a href="/archive">文章</a>
+
+
+      
+    </nav>
+    <article class="main">
+        <header class="title">
+甲骨文发布Java SE 7正式版
+</header>
+<article class="content">
+<p>7月29日, Java SE 7正式发布! 经过与世界范围内的Java社区,
+Java平台历时将近五年的协作, 标准版本已经可以
+<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载</a>
+了.</p>
+
+<h2>新特性</h2>
+
+<ul>
+<li>改进动态语言支持</li>
+<li>改进的IO, 加强对NIO的支持 详见 <a href="http://download.oracle.com/javase/7/docs/technotes/guides/io/enhancements.html#7">Enhancements in Java
+I/O</a></li>
+<li>支持非Java语言: Java SE 7 引入一个新的 JVM
+指令用于简化实现动态类型编程语言</li>
+<li>Garbage-First Collector 新的针对服务器的垃圾收集器用于替换CMS. <a href="http://download.oracle.com/javase/7/docs/technotes/guides/vm/G1.html">What
+is the Garbage-First
+Collector?</a></li>
+<li>基于ForkJoinPool类的fork/join框架.
+适合于多处理器环境下用来进行高效的运行大量任务. 详见 <a href="http://download.oracle.com/javase/7/docs/technotes/guides/concurrency/changes7.html">Concurrency
+Utilities Enhancements in Java SE
+7</a></li>
+<li>增强国际化支持. <a href="http://download.oracle.com/javase/7/docs/technotes/guides/intl/enhancements.7.html">Internationalization Enhancements in Java SE
+7</a></li>
+</ul>
+
+<h2>语言特性</h2>
+
+<h3>二进制数字表达方式</h3>
+
+<p>在java7中, 整形(byte, short, int, and long)可以用二进制表示, 加上前缀 0b
+或者 0B 就可以了.</p>
+
+<p><script src="https://gist.github.com/1113405.js"></p>
+
+<p></script></p>
+
+<h3>switch支持字符串变量</h3>
+
+<p>这可是期盼多年的特性. 表达式比较使用 <code>String.equals</code> 方法</p>
+
+<p><script src="https://gist.github.com/1113411.js"></p>
+
+<p></script></p>
+
+<h3>try-with-resources 语句</h3>
+
+<p>在资源使用完后自动关闭. 资源是指实现了
+<a href="http://download.oracle.com/javase/7/docs/api/java/lang/AutoCloseable.html">java.lang.AutoCloseable</a>
+或者
+<a href="http://download.oracle.com/javase/7/docs/api/java/io/Closeable.html">Closeable</a>
+接口的类.\
+注意在try-with-resources中依然可以使用 <code>catch</code> 和 <code>finally</code>, <code>catch</code> 和
+<code>finally</code> 会在资源关闭之后运行.</p>
+
+<p><script src="https://gist.github.com/1113421.js"></p>
+
+<p></script></p>
+
+<h3>同时捕获多个异常</h3>
+
+<pre><code>catch (IOException|SQLException ex) { logger.log(ex); throw ex; }
+</code></pre>
+
+<h3>数字表达中使用下划线</h3>
+
+<p><script src="https://gist.github.com/1113435.js"></p>
+
+<p></script></p>
+
+<h4>泛型在创建实例时的类型引用</h4>
+
+<p>之前的代码
+<code>Map&lt;String, List&lt;String&gt;&gt; myMap = new HashMap&lt;String, List&lt;String&gt;&gt;();</code>
+Java7的代码
+<code>Map&lt;String, List&lt;String&gt;&gt; myMap = new HashMap&lt;&gt;();</code>
+编译器可以根据声明自动推断范型的类型.</p>
+
+<h3>Improved Compiler Warnings and Errors When Using Non-Reifiable Formal Parameters with Varargs Methods</h3>
+
+<p>详细:
+<a href="http://download.oracle.com/javase/7/docs/technotes/guides/language/non-reifiable-varargs.html">链接</a></p>
+
+<hr />
+
+<p>可惜那个很酷的集合声明语法没有实现
+<code>List&lt;String&gt; people = {&quot;Frank&quot;, &quot;Mary&quot;, &quot;Satan&quot;};</code>
+<code>Map&lt;String, Integer&gt; map = {&quot;key&quot; : 1};</code>
+是不是有些动态语言的味道</p>
+
+<p>闭包也没有, 可惜…</p>
+
+</article>
+    </article>
+    <footer>
+      Copyright &copy; 2014 Rojazz1999 &#8226; <a href='https://plus.google.com/u/0/101202661005324839860?rel=author' rel='me'>Google+</a> &#8226; Hosted by <a href='http://github.com/prisoner/prisoner.github.com/' target='_blank'>GitHub</a> &#8226; powered by <a href='https://github.com/wendal/gor'>gor</a>
+    </footer>
+    
+<script src="http://cdn.bootcss.com/prettify/r298/prettify.min.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+  </body>
+</html>

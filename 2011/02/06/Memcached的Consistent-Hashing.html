@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <title>Memcached的Consistent Hashing</title>
+  
+    <meta name="author" content="Rojazz1999">
+    <link type="application/rss+xml" rel="alternate" title="CODE4FUN posts" href="/rss.xml">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="/assets/simple/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/simple/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+
+
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+    <header class="header">
+      CODE4FUN
+    </header>
+    <nav>
+      
+        
+
+
+  <a href="/">首页</a>
+
+
+      
+        
+
+
+  <a href="/archive">文章</a>
+
+
+      
+    </nav>
+    <article class="main">
+        <header class="title">
+Memcached的Consistent Hashing
+</header>
+<article class="content">
+<p>在有N台 <a href="http://memcached.org/">Memcached</a> 的情况下,
+如何有效的将数据分布到每台server上,
+在添加或移除server时如何减少对已有数据的影响.</p>
+
+<p>Memcached使用了Consistent Hashing算法来解决这些问题.</p>
+
+<h3>Consistent Hashing算法</h3>
+
+<p>详见 <a href="http://portal.acm.org/citation.cfm?id=258660">Consistent hashing and random
+trees</a> 和 <a href="http://en.wikipedia.org/wiki/Consistent_hashing">Consistent
+Hashing</a></p>
+
+<p>Memcached的Consistent Hashing算法:</p>
+
+<ol>
+<li>生成一个0~2^32-1的环</li>
+<li>求出memcached server(node)的哈希值, 并将其配置到环上</li>
+<li>求出数据的哈希值, 并将其配置到环上</li>
+<li>将数据映射到node上. 从数据配置到的位置开始顺时针查找,将数据保存到找到的第一个node上, 如果超过2^32-1还找不到node，就保存到第0个节点</li>
+</ol>
+
+<p><img src="/assets/media/2011-01-30_01.png" alt="" width="600"></p>
+
+<p><em>图片来源 <a href="http://tech.idv2.com/2008/07/24/memcached-004/">http://tech.idv2.com/2008/07/24/memcached-004/</a></em></p>
+
+<p>注意,Memcached的Consistent Hashing算法是在客户端实现的. 另外,
+有些Consistent
+Hashing算法的实现还使用了虚拟节点的方法来最大抑制数据的分布不均匀,
+来减小服务器增减时的缓存重新分布.</p>
+
+<p><a href="http://www.javaeye.com/topic/346682">memcached分布测试报告</a></p>
+
+<p><a href="https://github.com/superfeedr/consistent_hashr/blob/master/lib/consistent_hashr.rb">ruby实现</a></p>
+
+<script src="https://gist.github.com/1112126.js"></script>
+
+</article>
+    </article>
+    <footer>
+      Copyright &copy; 2014 Rojazz1999 &#8226; <a href='https://plus.google.com/u/0/101202661005324839860?rel=author' rel='me'>Google+</a> &#8226; Hosted by <a href='http://github.com/prisoner/prisoner.github.com/' target='_blank'>GitHub</a> &#8226; powered by <a href='https://github.com/wendal/gor'>gor</a>
+    </footer>
+    
+<script src="http://cdn.bootcss.com/prettify/r298/prettify.min.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+  </body>
+</html>

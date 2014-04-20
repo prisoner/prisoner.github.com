@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <title>TF-IDF概念</title>
+  
+    <meta name="author" content="Rojazz1999">
+    <link type="application/rss+xml" rel="alternate" title="CODE4FUN posts" href="/rss.xml">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="/assets/simple/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/simple/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+
+
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+    <header class="header">
+      CODE4FUN
+    </header>
+    <nav>
+      
+        
+
+
+  <a href="/">首页</a>
+
+
+      
+        
+
+
+  <a href="/archive">文章</a>
+
+
+      
+    </nav>
+    <article class="main">
+        <header class="title">
+TF-IDF概念
+</header>
+<article class="content">
+<p><a href="http://zh.wikipedia.org/wiki/TF-IDF">TF-IDF</a> (term frequency–inverse document frequency)也称为词汇频率/逆向文档频率.
+是一种常用加权技术, 常用于评估一歌词对于一个文档集或一个语料库中的其中一份文档的重要程度.</p>
+
+<p>TF-IDF的主要思想是: 词的重要性随着它在文档中出现的次数成正比增加,但同时会随着它在语料库中出现的频率成反比下降.</p>
+
+<p>TF指的是某一个给定的词语在该文档中出现的频率.<br />
+IDF指的是逆向文档频率, 是一个词语普遍重要性的度量. 可以由总文档数目除以包含该词语之文件的数目获得.<br />
+TF-IDF由TF乘以IDF获得.</p>
+
+<p>一篇文件的总词语数是100个，而词语“母牛”出现了3次，那么“母牛”一词在该文件中的词频就是 0.03 (<sup>3</sup>&frasl;<sub>100</sub>)。一个计算文件频率(DF) 的方法是测定有多少份文件出现过“母牛”一词，然后除以文件集里包含的文件总数。所以，如果“母牛”一词在1,000份文件出现过，而文件总数是 10,000,000份的话，其文件频率就是 0.0001 (<sup>1000</sup>&frasl;<sub>10</sub>,000,000)。最后，TF-IDF分数就可以由计算词频除以文件频率而得到。以上面的例子来说，“母牛”一词在该文件集的TF- IDF分数会是 <code>(3/100) * (1000/10,000,000) = 300</code></p>
+
+<p>另一种形式是将文档频率取对数, 即 <code>(3/100) * log(10,000,000 / 1,000) = 0.12</code></p>
+
+<p>详细见 <a href="http://zh.wikipedia.org/wiki/TF-IDF">http://zh.wikipedia.org/wiki/TF-IDF</a></p>
+
+</article>
+    </article>
+    <footer>
+      Copyright &copy; 2014 Rojazz1999 &#8226; <a href='https://plus.google.com/u/0/101202661005324839860?rel=author' rel='me'>Google+</a> &#8226; Hosted by <a href='http://github.com/prisoner/prisoner.github.com/' target='_blank'>GitHub</a> &#8226; powered by <a href='https://github.com/wendal/gor'>gor</a>
+    </footer>
+    
+<script src="http://cdn.bootcss.com/prettify/r298/prettify.min.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+  </body>
+</html>

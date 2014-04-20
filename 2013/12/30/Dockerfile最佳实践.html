@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <title>Dockerfile最佳实践</title>
+  
+    <meta name="author" content="Rojazz1999">
+    <link type="application/rss+xml" rel="alternate" title="CODE4FUN posts" href="/rss.xml">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="/assets/simple/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/simple/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+
+
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+    <header class="header">
+      CODE4FUN
+    </header>
+    <nav>
+      
+        
+
+
+  <a href="/">首页</a>
+
+
+      
+        
+
+
+  <a href="/archive">文章</a>
+
+
+      
+    </nav>
+    <article class="main">
+        <header class="title">
+Dockerfile最佳实践
+</header>
+<article class="content">
+<p>Dockerfile提供了一个简单的语法来构建Image. 以下是几点技巧帮助你更好的使用Dockerfile.</p>
+
+<h2><a style="display: block;" name="使用缓存" href="#使用缓存"></a>使用缓存</h2>
+
+<p>Dockerfile中的每一个操作都会提交一个更改到一个新的Image中, 并且这个Image会做为下一个操作的Base Image. 如果一个使用相同操作的Image存在, 那么这些操作不会执行, 而是直接使用这个Image.</p>
+
+<p>例如所有的Dockerfile都可以使用以下的共通代码.</p>
+
+<pre><code>FROM ubuntu
+MAINTAINER Michael Crosby &lt;michael@crosbymichael.com&gt;
+
+RUN echo &quot;deb http://archive.ubuntu.com/ubuntu precise main universe&quot; &gt; /etc/apt/sources.list
+RUN apt-get update
+RUN apt-get upgrade -y
+</code></pre>
+
+<p><em>保持通用操作在Dockerfile顶部, 以使用缓存</em></p>
+
+<h2><a style="display: block;" name="使用标签" href="#使用标签"></a>使用标签</h2>
+
+<p>除非仅仅是出于实验目的, 不然你应该使用<code>docker build -t</code>命令来创建Image.</p>
+
+<p><em>总是使用参数<code>-t</code></em></p>
+
+<h2><a style="display: block;" name="暴露端口" href="#暴露端口"></a>暴露端口</h2>
+
+<p>docker的两个重要特性是可重复利用和可移植. Image应该在任何主机上能运行多次. 所以你不应该在Dockerfile中指定公开端口. 如果Image的使用者需要指定公开端口, 他/她们会使用<code>-p</code>参数的.</p>
+
+<p><em>不要在Dockerfile中指定公开端口</em></p>
+
+<h2><a style="display: block;" name="cmd和entrypoint语法" href="#cmd和entrypoint语法"></a>CMD和ENTRYPOINT语法</h2>
+
+<p>CMD和ENTRYPOINT都有两种语法.</p>
+
+<pre><code>CMD /bin/echo
+# or
+CMD [&quot;/bin/echo&quot;]
+</code></pre>
+
+<p>第一种语法在执行的时候, docker会将命令包装成<code>/bin/sh -c</code>的形式. 这在有些情况下会产生一些难以发现的错误.</p>
+
+<p><em>CMD和ENTRYPOINT总是使用数组形式的语法</em></p>
+
+<h2><a style="display: block;" name="cmd和entrypoint更好的配合" href="#cmd和entrypoint更好的配合"></a>CMD和ENTRYPOINT更好的配合</h2>
+
+<p>ENTRYPOINT可以让你docker化的程序像一个可执行程序一样运行. 你可以传递参数到ENTRYPOINT指定的命令中, 而不用担心在运行<code>docker run</code>的时候会被覆盖. 有时ENTRYPOINT和CMD同时使用会有更好的效果. 例如<a href="http://www.rethinkdb.com/">Rethinkdb</a>的Dockerfile.</p>
+
+<pre><code># Dockerfile for Rethinkdb
+# http://www.rethinkdb.com/
+
+FROM ubuntu
+
+MAINTAINER Michael Crosby &lt;michael@crosbymichael.com&gt;
+
+RUN echo &quot;deb http://archive.ubuntu.com/ubuntu precise main universe&quot; &gt; /etc/apt/sources.list
+RUN apt-get update
+RUN apt-get upgrade -y
+
+RUN apt-get install -y python-software-properties
+RUN add-apt-repository ppa:rethinkdb/ppa
+RUN apt-get update
+RUN apt-get install -y rethinkdb
+
+# Rethinkdb process
+EXPOSE 28015
+# Rethinkdb admin console
+EXPOSE 8080
+
+# Create the /rethinkdb_data dir structure
+RUN /usr/bin/rethinkdb create
+
+ENTRYPOINT [&quot;/usr/bin/rethinkdb&quot;]
+
+CMD [&quot;--help&quot;]
+</code></pre>
+
+<p>所有运行<code>docker run</code>时传递的参数都会被传递到ENTRYPOINT指定的命令<code>/usr/bin/rethinkdb</code>中, 当没有指定参数时使用CMD指定的<code>--help</code>参数.</p>
+
+<p>运行<code>docker run crosbymichael/rethinkdb</code>, 会输出:</p>
+
+<pre><code>Running 'rethinkdb' will create a new data directory or use an existing one,
+  and serve as a RethinkDB cluster node.
+File path options:
+  -d [ --directory ] path           specify directory to store data and metadata
+  --io-threads n                    how many simultaneous I/O operations can happen
+                                    at the same time
+
+Machine name options:
+  -n [ --machine-name ] arg         the name for this machine (as will appear in
+                                    the metadata).  If not specified, it will be
+                                    randomly chosen from a short list of names.
+
+Network options:
+  --bind {all | addr}               add the address of a local interface to listen
+                                    on when accepting connections; loopback
+                                    addresses are enabled by default
+  --cluster-port port               port for receiving connections from other nodes
+  --driver-port port                port for rethinkdb protocol client drivers
+  -o [ --port-offset ] offset       all ports used locally will have this value
+                                    added
+  -j [ --join ] host:port           host and port of a rethinkdb node to connect to
+  .................
+</code></pre>
+
+<p>而运行<code>docker run crosbymichael/rethinkdb --bind all</code>, 会输出:</p>
+
+<pre><code>info: Running rethinkdb 1.7.1-0ubuntu1~precise (GCC 4.6.3)...
+info: Running on Linux 3.2.0-45-virtual x86_64
+info: Loading data from directory /rethinkdb_data
+warn: Could not turn off filesystem caching for database file: &quot;/rethinkdb_data/metadata&quot; (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+warn: Could not turn off filesystem caching for database file: &quot;/rethinkdb_data/auth_metadata&quot; (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+info: Listening for intracluster connections on port 29015
+info: Listening for client driver connections on port 28015
+info: Listening for administrative HTTP connections on port 8080
+info: Listening on addresses: 127.0.0.1, 172.16.42.13
+info: Server ready
+info: Someone asked for the nonwhitelisted file /js/handlebars.runtime-1.0.0.beta.6.js, if this should be accessible add it to the whitelist.
+</code></pre>
+
+<p><em>更好的配合使用CMD和ENTRYPOINT</em></p>
+
+<hr />
+
+<p>原文: <a href="http://crosbymichael.com/dockerfile-best-practices.html">Dockerfile Best Practices</a></p>
+
+<p>参考:</p>
+
+<p><a href="http://www.kstaken.com/blog/2013/07/06/how-to-use-entrypoint-in-a-dockerfile/">How to Use Entrypoint in Docker Builder</a></p>
+
+<p><a href="http://www.docker.io/learn/dockerfile/level1/">Dockerfile tutorial Level1</a></p>
+
+<p><a href="http://www.docker.io/learn/dockerfile/level2/">Dockerfile tutorial Level2</a></p>
+
+</article>
+    </article>
+    <footer>
+      Copyright &copy; 2014 Rojazz1999 &#8226; <a href='https://plus.google.com/u/0/101202661005324839860?rel=author' rel='me'>Google+</a> &#8226; Hosted by <a href='http://github.com/prisoner/prisoner.github.com/' target='_blank'>GitHub</a> &#8226; powered by <a href='https://github.com/wendal/gor'>gor</a>
+    </footer>
+    
+<script src="http://cdn.bootcss.com/prettify/r298/prettify.min.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+  </body>
+</html>

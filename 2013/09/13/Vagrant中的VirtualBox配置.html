@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <title>Vagrant中的VirtualBox配置</title>
+  
+    <meta name="author" content="Rojazz1999">
+    <link type="application/rss+xml" rel="alternate" title="CODE4FUN posts" href="/rss.xml">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="/assets/simple/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/simple/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+
+
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+    <header class="header">
+      CODE4FUN
+    </header>
+    <nav>
+      
+        
+
+
+  <a href="/">首页</a>
+
+
+      
+        
+
+
+  <a href="/archive">文章</a>
+
+
+      
+    </nav>
+    <article class="main">
+        <header class="title">
+Vagrant中的VirtualBox配置
+</header>
+<article class="content">
+<p>VirtualBox provider暴露了一些额外的配置项可以用于配置VirtualBox选项.</p>
+
+<h2><a style="display: block;" name="配置虚拟机名称" href="#配置虚拟机名称"></a>配置虚拟机名称</h2>
+
+<pre><code class="ruby">config.vm.provider &quot;virtualbox&quot; do |v|
+  v.name = &quot;my_vm&quot;
+end
+</code></pre>
+
+<h2><a style="display: block;" name="配置是否使用headless模式" href="#配置是否使用headless模式"></a>配置是否使用headless模式</h2>
+
+<p>Vagrant默认使用VirtualBox的headless模式. 如果需要也可以设置不使用.</p>
+
+<pre><code class="ruby">config.vm.provider &quot;virtualbox&quot; do |v|
+  v.gui = true
+end
+</code></pre>
+
+<h2><a style="display: block;" name="vboxmanage设置" href="#vboxmanage设置"></a>VBoxManage设置</h2>
+
+<p>Vagrant可以使用<a href="http://www.virtualbox.org/manual/ch08.html">VBoxManage</a>进行一些额外的配置.</p>
+
+<pre><code class="ruby">config.vm.provider &quot;virtualbox&quot; do |v|
+  v.customize [&quot;modifyvm&quot;, :id, &quot;--cpuexecutioncap&quot;, &quot;50&quot;]
+end
+</code></pre>
+
+<ul>
+<li>配置中的<code>:id</code>会在创建虚拟机时使用实际的虚拟机ID替换.</li>
+<li>数组中的所有参数会被组合做为VBoxManage的参数传入.</li>
+<li>如果有多个<code>customize</code>, 会被按顺序执行.</li>
+</ul>
+
+<p>详细的可供修改参数请参考<a href="http://www.virtualbox.org/manual/ch08.html">VBoxManage</a>, 以下是一些常用参数.</p>
+
+<p><strong>modifyvm 使用的参数:</strong></p>
+
+<ol>
+<li>&ndash;ostype <ostype>: 指定虚拟机的类型. 类型可以使用<code>VBoxManage list ostypes</code>查看.</li>
+<li>&ndash;memory <memorysize>: 指定虚拟机使用的内存, 单位是MB.</li>
+<li>&ndash;vram <vramsize>: 指定显卡使用的内存.</li>
+<li>&ndash;cpus <cpucount>: 指定使用cpu的个数.</li>
+<li>&ndash;rtcuseutc on|off: 指定硬件时钟使用UTC.</li>
+<li>&ndash;cpuexecutioncap <1-100>: 设置虚拟机使用cpu的运行峰值.</li>
+<li>&ndash;boot<1-4> none|floppy|dvd|disk|net: 指定启动设备.</li>
+<li>&ndash;snapshotfolder default|<path>: 指定snapshot保存目录.</li>
+</ol>
+
+</article>
+    </article>
+    <footer>
+      Copyright &copy; 2014 Rojazz1999 &#8226; <a href='https://plus.google.com/u/0/101202661005324839860?rel=author' rel='me'>Google+</a> &#8226; Hosted by <a href='http://github.com/prisoner/prisoner.github.com/' target='_blank'>GitHub</a> &#8226; powered by <a href='https://github.com/wendal/gor'>gor</a>
+    </footer>
+    
+<script src="http://cdn.bootcss.com/prettify/r298/prettify.min.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+  </body>
+</html>

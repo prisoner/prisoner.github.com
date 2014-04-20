@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <title>使用Supervisor管理进程</title>
+  
+    <meta name="author" content="Rojazz1999">
+    <link type="application/rss+xml" rel="alternate" title="CODE4FUN posts" href="/rss.xml">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="/assets/simple/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/simple/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+
+
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+    <header class="header">
+      CODE4FUN
+    </header>
+    <nav>
+      
+        
+
+
+  <a href="/">首页</a>
+
+
+      
+        
+
+
+  <a href="/archive">文章</a>
+
+
+      
+    </nav>
+    <article class="main">
+        <header class="title">
+使用Supervisor管理进程
+</header>
+<article class="content">
+<p>Supervisor是用来管理和监控进程的工具. 有时候我们希望我们自己开发的程序也能做到随系统自动启动, 而且启动之后最好还能方便的控制其停止/重启.  并且在出现问题的时候能够自动重启.</p>
+
+<p>一般我们可以在<code>/etc/init.d/</code>下建立启动脚本, 但是启动脚本写起来比较繁琐, 并且不能自动重启.
+这时候我们就可以使用Supervisor了.</p>
+
+<h2><a style="display: block;" name="安装" href="#安装"></a>安装</h2>
+
+<p>ubuntu系统下:</p>
+
+<pre><code>sudo apt-get install supervisor
+</code></pre>
+
+<h2><a style="display: block;" name="配置" href="#配置"></a>配置</h2>
+
+<p>配置文件默认为<code>/etc/supervisord.conf</code>. 如果要添加一个被管理的进程, 在该文件加入配置:</p>
+
+<pre><code>[program:test]
+command=python path/to/test.py
+autostart=true
+autorestar=unexpected
+stdout_logfile=path/to/log.log
+</code></pre>
+
+<ul>
+<li>[program:test] test是指定控制任务时使用的名称.</li>
+<li>command=python path/to/test.py 被控制的程序, 可以是任何命令</li>
+<li>autostart=true 是否随着supervisord启动而启动</li>
+<li>autorestar=unexpected 当进程死亡后, 是否重新启动进程</li>
+<li>stdout_logfile=path/to/log.log stdout输出的日子文件</li>
+</ul>
+
+<p>配置文件更改后, 需要执行</p>
+
+<pre><code>sudo supervisorctl update
+</code></pre>
+
+<p>来更新配置</p>
+
+<p>更多详细配置可以参考<a href="http://supervisord.org/configuration.html#program-x-section-values">官方文档</a></p>
+
+<h2><a style="display: block;" name="使用" href="#使用"></a>使用</h2>
+
+<p>Supervisor安装后有两个可执行命令:</p>
+
+<ul>
+<li>supervisord 后台守护进程</li>
+<li>supervisorctl 控制程序, 用来向守护进程发送命令</li>
+</ul>
+
+<p>supervisorctl命令:</p>
+
+<ol>
+<li>supervisorctl status test 查看test的状态</li>
+<li>supervisorctl start test 启动test</li>
+<li>supervisorctl stop test 停止test</li>
+</ol>
+
+<p>更多命令请参考: <code>supervisorctl help</code></p>
+
+<h2><a style="display: block;" name="web客户端" href="#web客户端"></a>web客户端</h2>
+
+<p>在配置中有一段<code>[inet_http_server]</code>,  配置好后就打开<code>127.0.0.1:9001</code>, 就可以看到一个网页版控制界面了.</p>
+
+<p>配置:</p>
+
+<pre><code>[inet_http_server]
+port = 127.0.0.1:9001
+username = user
+password = 123
+</code></pre>
+
+</article>
+    </article>
+    <footer>
+      Copyright &copy; 2014 Rojazz1999 &#8226; <a href='https://plus.google.com/u/0/101202661005324839860?rel=author' rel='me'>Google+</a> &#8226; Hosted by <a href='http://github.com/prisoner/prisoner.github.com/' target='_blank'>GitHub</a> &#8226; powered by <a href='https://github.com/wendal/gor'>gor</a>
+    </footer>
+    
+<script src="http://cdn.bootcss.com/prettify/r298/prettify.min.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+  </body>
+</html>

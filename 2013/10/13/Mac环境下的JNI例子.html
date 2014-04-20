@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <title>Mac环境下的JNI例子</title>
+  
+    <meta name="author" content="Rojazz1999">
+    <link type="application/rss+xml" rel="alternate" title="CODE4FUN posts" href="/rss.xml">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="/assets/simple/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/simple/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+
+
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+    <header class="header">
+      CODE4FUN
+    </header>
+    <nav>
+      
+        
+
+
+  <a href="/">首页</a>
+
+
+      
+        
+
+
+  <a href="/archive">文章</a>
+
+
+      
+    </nav>
+    <article class="main">
+        <header class="title">
+Mac环境下的JNI例子
+</header>
+<article class="content">
+<p>Mac环境下的JNI例子</p>
+
+<p>Java可以通过JNI接口访问本地的动态连接库, 来调用C或者C++实现的功能.
+使用Java JNI主要有几个步骤:</p>
+
+<ol>
+<li>编写Java代码 注明native方法.</li>
+<li>编译Java代码得到class文件.</li>
+<li>使用javah -jni生成该类对应的C语言头文件.</li>
+<li>使用C/C++实现头文件中声明的函数.</li>
+<li>编译C/C++实现代码, 生成动态连接库.</li>
+</ol>
+
+<p>下面是一个简单的例子</p>
+
+<ul>
+<li>创建Java文件</li>
+</ul>
+
+<pre><code class="java">class HelloWorld {
+    private native void print();
+    public static void main(String[] args) {
+        new HelloWorld().print();
+    }
+    static {
+        System.loadLibrary(&quot;HelloWorld&quot;);
+    }
+}
+</code></pre>
+
+<ul>
+<li>编译Java代码</li>
+</ul>
+
+<p><code>javac helloWorld.java</code></p>
+
+<ul>
+<li>生成C语言头文件</li>
+</ul>
+
+<p><code>javah -jni HelloWorld</code></p>
+
+<ul>
+<li>实现头文件声明的函数</li>
+</ul>
+
+<pre><code class="cpp">#include &lt;jni.h&gt;
+#include &lt;iostream&gt;
+#include &quot;HelloWorld.h&quot;
+using namespace std;
+
+JNIEXPORT void JNICALL
+Java_HelloWorld_print(JNIEnv *, jobject){
+    cout &lt;&lt; &quot;hello JNI\n&quot;;
+    return;
+}
+</code></pre>
+
+<ul>
+<li>生成动态链接库</li>
+</ul>
+
+<p>编译C++代码的时候在MacOS下和在Linux Windows有所不同, 不是编译成.so或者dll, 而是MacOS自己的jnilib. 并且jni.h的目录也比较特殊, 是/System/Library/Frameworks/JavaVM.framework/Headers/, 这个需要稍微注意一下.</p>
+
+<p>命令:</p>
+
+<p><code>g++ -dynamiclib -o libhelloworld.jnilib HelloWorld.cpp -framework JavaVM -I/System/Library/Frameworks/JavaVM.framework/Headers</code></p>
+
+<p>一切成功后, 运行<code>java HelloWorld</code>, 就可以看到输出<code>hello JNI</code>了.</p>
+
+<p>带参数和返回值的例子:</p>
+
+<p>Java文件:</p>
+
+<pre><code class="java">class HelloWorld {
+    private native String print(String str);
+    public static void main(String[] args) {
+        HelloWorld o = new HelloWorld();
+        String str = o.print(&quot;JNI&quot;);
+        System.out.println(str);
+    }
+    static {
+        System.loadLibrary(&quot;HelloWorld&quot;);
+    }
+}
+</code></pre>
+
+<p>实现:</p>
+
+<pre><code class="cpp">#include &lt;jni.h&gt;
+#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &quot;HelloWorld.h&quot;
+using namespace std;
+
+JNIEXPORT jstring JNICALL
+Java_HelloWorld_print(JNIEnv *env, jobject obj, jstring str){
+  const char *cstr = env-&gt;GetStringUTFChars(str, 0);
+  char cap[128] = &quot;hello &quot;;
+  strcat(cap, cstr);
+  env-&gt;ReleaseStringUTFChars(str, cstr);
+  return env-&gt;NewStringUTF(cap);
+}
+</code></pre>
+
+</article>
+    </article>
+    <footer>
+      Copyright &copy; 2014 Rojazz1999 &#8226; <a href='https://plus.google.com/u/0/101202661005324839860?rel=author' rel='me'>Google+</a> &#8226; Hosted by <a href='http://github.com/prisoner/prisoner.github.com/' target='_blank'>GitHub</a> &#8226; powered by <a href='https://github.com/wendal/gor'>gor</a>
+    </footer>
+    
+<script src="http://cdn.bootcss.com/prettify/r298/prettify.min.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+  </body>
+</html>
