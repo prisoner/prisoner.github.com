@@ -1,0 +1,11 @@
+title : CODE4FUN
+tagline: Blog Tagline
+author :
+  name : Rojazz1999
+  email : blah@email.test
+  github : prisoner
+  twitter : rojazz1999
+
+navigation :
+  - index.html
+  - archive.html

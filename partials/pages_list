@@ -1,0 +1,7 @@
+{{#is_active_page }}
+  <a href="{{url}}" class="active">{{title}}</a>
+{{/is_active_page}}
+
+{{^is_active_page}}
+  <a href="{{url}}">{{title}}</a>
+{{/is_active_page }}

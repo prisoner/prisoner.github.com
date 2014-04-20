@@ -1,0 +1,13 @@
+---
+title: 文章
+description:
+---
+
+<section>
+  <header class="title">所有文章</header>
+  <ol class="all">
+		{{# db.posts.collated }}
+		  {{> posts_collate }}
+		{{/ db.posts.collated }}
+  </ol>
+</section>
