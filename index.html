@@ -48,6 +48,59 @@
 
 <div class="post">
   <h3 class="title">
+    <a href="/2014/04/22/Docker%E4%B8%AD%E9%81%97%E5%A4%B1%E7%9A%84%E5%8C%85.html">Docker中遗失的包</a>
+    <span class="date">2014-04-22</span>
+  </h3>
+  <p><a href="http://crosbymichael.com/the-lost-packages-of-docker.html">原文</a>   <a href="http://www.oschina.net/translate/the-lost-packages-of-docker">翻译</a></p>
+
+<h2><a style="display: block;" name="netlink" href="#netlink"></a>netlink</h2>
+
+<p>我们有一个Netlink的纯Go实现，你可以用在你的项目中。你可以使用这个包来创建veth 接口，桥，设置IP，mtu，和网络接口的其他设置，移动网络接口到不同的Linux命名空间中，等等一堆事情。创建veth pairs和对你的每个docker容器分配一个IP的代码是相同的。</p>
+
+<p>让我们用这个包创建一个桥并设置一个IP：</p>
+
+<pre><code>package main
+
+import (
+        &quot;github.com/dotcloud/docker/pkg/netlink&quot;
+        &quot;log&quot;
+        &quot;net&quot;
+)
+
+func main() {
+        // create a new bridge
+        if err := netlink.CreateBridge(&quot;mydocker0&quot;, false); err != nil {
+                log.Fatal(err)
+        }
+        // get the bridge
+        bridge, err := net.InterfaceByName(&quot;mydocker0&quot;)
+        if err != nil {
+                log.Fatal(err)
+        }
+
+        ip, ipNet, err := net.ParseCIDR(&quot;10.0.41.1/16&quot;)
+        if err != nil {
+                log.Fatal(err)
+        }
+
+        // add an ip to the bridge
+        if err := netlink.NetworkLinkAddIp(bridge, ip, ipNet); err != nil {
+                log.Fatal(err)
+        }
+        // bring the interface up
+        if err := netlink.NetworkLinkUp(bridge); err != nil {
+                log.Fatal(err)
+        }
+}
+</code></pre>
+
+  <div class="more">
+    <a href="/2014/04/22/Docker%E4%B8%AD%E9%81%97%E5%A4%B1%E7%9A%84%E5%8C%85.html" class="btn">阅读更多...</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title">
     <a href="/2014/04/18/%E5%B7%A5%E7%A8%8B%E5%B8%88%E5%BF%83%E9%87%8C%E7%9A%84%E7%97%9B%E5%8F%AA%E6%9C%89%E5%B7%A5%E7%A8%8B%E5%B8%88%E6%89%8D%E4%BC%9A%E6%87%82.html">工程师心里的痛只有工程师才会懂</a>
     <span class="date">2014-04-18</span>
   </h3>
@@ -321,39 +374,6 @@ RUN apt-get upgrade -y
 
   <div class="more">
     <a href="/2013/10/31/%E4%BB%80%E4%B9%88%E6%98%AFFlight%E7%BB%84%E4%BB%B6.html" class="btn">阅读更多...</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title">
-    <a href="/2013/10/29/%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%9A%84%E7%94%9F%E6%88%90%E7%BB%86%E8%8A%82%E5%92%8C%E5%8E%9F%E7%90%86.html">二维码的生成细节和原理</a>
-    <span class="date">2013-10-29</span>
-  </h3>
-  <p>二维码又称QR Code，QR全称Quick Response，是一个近几年来移动设备上超流行的一种编码方式，它比传统的Bar Code条形码能存更多的信息，也能表示更多的数据类型：比如：字符，数字，日文，中文等等。这两天学习了一下二维码图片生成的相关细节，觉得这个玩意就是一个密码算法，在此写一这篇文章 ，揭露一下。供好学的人一同学习之。</p>
-
-<p>关于QR Code Specification，可参看这个PDF：<a href="http://raidenii.net/files/datasheets/misc/qr_code.pdf">http://raidenii.net/files/datasheets/misc/qr_code.pdf&nbsp;</a></p>
-
-<h4>基础知识</h4>
-
-<p>首先，我们先说一下二维码一共有40个尺寸。官方叫版本Version。Version 1是21 x 21的矩阵，Version 2是 25 x 25的矩阵，Version 3是29的尺寸，每增加一个version，就会增加4的尺寸，公式是：(V-1)*4 + 21（V是版本号） 最高Version 40，(40-1)*4+21 = 177，所以最高是177 x 177 的正方形。</p>
-
-<p>下面我们看看一个二维码的样例：</p>
-
-<p><img src="http://coolshell.cn//wp-content/uploads/2013/10/QR-Code-Overview.jpeg" alt="" />
-</p>
-
-<p><span id="more-10590"></span></p>
-
-<h5>定位图案</h5>
-
-<ul>
-<li><p>Position Detection Pattern是定位图案，用于标记二维码的矩形大小。这三个定位图案有白边叫Separators for Postion Detection Patterns。之所以三个而不是四个意思就是三个就可以标识一个矩形了。</p></li>
-
-<li><p>Timing Patterns也是用于定位的。原因是二维码有40种尺寸，尺寸过大了后需要有根标准线，不然扫描的时候可能会扫歪了。</p></li>
-</ul>
-
-  <div class="more">
-    <a href="/2013/10/29/%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%9A%84%E7%94%9F%E6%88%90%E7%BB%86%E8%8A%82%E5%92%8C%E5%8E%9F%E7%90%86.html" class="btn">阅读更多...</a>
   </div>
 </div>
 
