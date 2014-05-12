@@ -1,0 +1,74 @@
+---
+title: ElasticSearch索引优化速查
+date: '2014-05-12'
+---
+
+最近做ElasticSearch索引的优化, 发现一篇好文. 转载于此, 有空再翻译.
+
+原文地址: [Elasticsearch Indexing Performance Cheatsheet](https://blog.codecentric.de/en/2014/05/elasticsearch-indexing-performance-cheatsheet/)
+
+----
+
+You plan to index large amounts of data in Elasticsearch? Or you are already trying to do so but it turns out that throughput is too low? Here is a collection of tips and ideas to increase indexing throughput with Elasticsearch. Some of them I have successfully tried myself, others I have only read about and found them reasonable. In any case, I hope you will find them useful.
+
+In order to fit all this into a single article, I have kept the suggestions rather brief. For some of them, you may feel that you need to learn more before putting them into practice. To ease your task a little, I have included links to the relevant sections of the Elasticsearch documentation which you may use as a starting point for further research.
+
+### General Performance
+
+Before doing anything more specific, it makes sense to follow the advice given in the Elasticsearch documentation on [configuration](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/setup-configuration.html). In a nutshell:
+
+* Set the maximum number of open file descriptors for the user running Elasticsearch to at least 32k or 64k.
+* If possible, consider disabling swapping for the Elasticsearch process memory. Note, however, that in a virtualized environment this may not behave as expected.
+* Set -Xms to the same value as -Xmx (the same result can be achieved by setting the ES_HEAP_SIZE environment variable).
+* Leave some amount of physical memory unassigned so that the OS file system cache is free to use it for Lucene’s benefit. A rule of thumb is to have the Elasticsearch JVM use no more than half of the available memory.
+
+### Mapping
+
+If your search requirements allow it, there is some room for optimization in the mapping definition of your index:
+
+* By default, Elasticsearch stores the original data in a special  _source field . If you do not need it, disable it.
+* By default, Elasticsearch analyzes the input data of all fields in a special  _all field . If you do not need it, disable it.
+* If you are using the _source field, there is no additional value in setting any other field to _stored.
+* If you are not using the _source field, only set those fields to _stored that you need to. Note, however, that using _source brings certain advantages, such as the ability to use the update API.
+* For analyzed fields, do you need norms ? If not, disable them by setting norms.enabled to false.
+* Do you need to store term frequencies and positions, as is done by default, or can you do with less – maybe only doc numbers? Set index_options to what you really need, as outlined in the string core type description .
+* For analyzed fields, use the simplest analyzer that satisfies the requirements for the field. Or maybe you can even go with not_analyzed?
+* Do not analyze, store, or even send data to Elasticsearch that you do not need for answering search requests. In particular, double-check the content of mappings that you do not define yourself (e.g., because a tool like Logstash generates them for you).
+
+### Requests and Clients
+
+You can also gain a lot from optimizing the way in which you transfer indexing requests to Elasticsearch:
+
+* Do you have to send a separate request for each document? Or can you buffer documents in order to use the bulk API  for indexing multiple documents with a single request?
+* When using bulk requests, optimize the bulk size, i.e., how many documents you bundle in a single request. Usually an appropriate bulk size has to be discovered empirically by trying out different sizes under realistic load conditions.
+* If your business can afford it, you can even consider trading some reliability for performance using the bulk UDP API  for certain data. This is particularly interesting if the client and server participating in the request reside on the same host.
+* If you are using an HTTP client, consider using long-lived HTTP connections. Also, make sure that HTTP chunking is not hampering throughput.
+* Consider using one of the various existing clients  as they may contain performance advantages over using plain HTTP.
+* If your client speaks Java, consider using the NodeClient . A NodeClient joins the cluster and knows which nodes to address for certain requests, possibly saving one hop when compared to other clients. If you cannot use the NodeClient, e.g., due to security restrictions, see if you can use  TransportClient  before considering something else.
+* Can you parallelize indexing by using multiple clients? It may well be that a single client turns out to be the indexing bottleneck and that the Elasticsearch server is able to handle a much higher load.
+
+### Sharding and Replication
+
+Elasticsearch provides sharding and replication as the recommended way for scaling and increasing availability of an index. There are a few things to consider:
+
+* If a single Elasticsearch server is not enough to provide your desired indexing throughput, you may need to scale out. Multiple cluster nodes enable parallel work on an index by sharding it. Note: The number of shards of an index needs to be set  on index creation  and cannot be changed later. In case you do not know exactly how much data to expect, you may consider overallocating a few shards (but not too many, they are not free!) to have some spare capacity available. Other than that, index aliases may provide a way (albeit with limitations) of scaling out an index at a later point in time.
+* Replication is an important feature for being able to cope with failure, but the more replicas you have the longer indexing will take. Thus, for raw indexing throughput it would be best to have no replicas at all. Luckily, in contrast to the number of shards, you may change the number of replicas  of an index at any time, which gives us some additional options. In certain situations, such as populating a new index initially, or migrating data from one index to another, it may prove beneficial to start without replication and only add replicas later, once the time-critical initial indexing has been completed.
+* Consider separating data nodes (that actually store and index data) from “aggregator nodes” (used only for querying). When aggregator nodes handle search queries and only contact data nodes as needed, they take load off the data nodes which will then have more capacity for handling indexing requests.
+* By default, an indexing request is completed once the data has been safely received (i.e., stored in the transaction log) by all replicas. By setting the query parameter replication to async , the request will already complete when the data has been acknowledged on the primary shard.
+
+### Index Settings
+
+There are several index level settings that you may tune to improve indexing throughput:
+
+* By default, an index shard uses a refresh interval of one second, i.e., new documents become available for search after one second. Even though refreshing is a more lightweight operation than one may think, it comes at a cost. Thus, depending on your search requirements, you may consider setting the refresh interval to something higher than one second. It can even make sense to temporarily  turn off refreshing completely  for an index (by setting the interval to -1), e.g., during a bulk indexing run, and trigger it manually  at the end.
+* Compared to refreshing an index shard, the really expensive operation is flushing its transaction log (which involves a Lucene commit). Elasticsearch performs flushes based on a number of triggers that may be changed at run time . By delaying flushes, or disabling them completely, you can increase indexing throughput. Just be aware that nothing comes for free, and the delayed flush will of course take longer when it eventually happens.
+* The default segment merge policy, “tiered”, supports a compound format where data is stored in fewer files to reduce the number of open file handles needed. However, the compound format comes along with a performance penalty. There are two settings, index.compound_on_flush and index.compound_format, that specify whether the compound format should be used for new segments and merged segments, respectively. Making sure that both are set to false may improve indexing performance, at the cost of more file handles.
+* Segment merging is done in the background but requires I/O from which indexing performance may suffer. Therefore, it is possible to throttle merging  to a maximum number of bytes per second, on the node or index level. Note that throttling is already done by default, but maybe you want to adjust the predefined limit according to your needs.
+* The setting indices.memory.index_buffer_size defines the percentage of available heap memory that may be used for indexing operations (the remaining heap memory will mainly be used for search operations). The default of 10% may be too low if you have lots of data to index, and it may make sense to set it to a higher value .
+* Index warmup is a useful concept to speed up search queries, but when indexing large amounts of data (in particular, bulk indexing) it may make sense to temporarily disable it .
+* Consider increasing the node level thread pool size for indexing and bulk operations (and measure if it really brings an improvement).
+* The setting index.index_concurrency limits the number of threads that may concurrently perform indexing operations on a single shard. Consider increasing the value, especially when there are no other shards on the node (and measure if it pays off).
+
+### Conclusion
+
+I hope some of these suggestions will help you resolve any indexing performance problems you might have. Keep in mind, however, that the most important aspect of a search engine is, well, the search. Do not make the mistake of tuning your search engine to maximum indexing throughput only to discover that out of a sudden its query performance suffers or it does not fulfill the functional requirements anymore. Always make sure that your users get a quality search experience and really find what they are looking for.
