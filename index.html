@@ -48,6 +48,37 @@
 
 <div class="post">
   <h3 class="title">
+    <a href="/2014/05/12/ElasticSearch%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E9%80%9F%E6%9F%A5.html">ElasticSearch索引优化速查</a>
+    <span class="date">2014-05-12</span>
+  </h3>
+  <p>最近做ElasticSearch索引的优化, 发现一篇好文. 转载于此, 有空再翻译.</p>
+
+<p>原文地址: <a href="https://blog.codecentric.de/en/2014/05/elasticsearch-indexing-performance-cheatsheet/">Elasticsearch Indexing Performance Cheatsheet</a></p>
+
+<hr />
+
+<p>You plan to index large amounts of data in Elasticsearch? Or you are already trying to do so but it turns out that throughput is too low? Here is a collection of tips and ideas to increase indexing throughput with Elasticsearch. Some of them I have successfully tried myself, others I have only read about and found them reasonable. In any case, I hope you will find them useful.</p>
+
+<p>In order to fit all this into a single article, I have kept the suggestions rather brief. For some of them, you may feel that you need to learn more before putting them into practice. To ease your task a little, I have included links to the relevant sections of the Elasticsearch documentation which you may use as a starting point for further research.</p>
+
+<h3>General Performance</h3>
+
+<p>Before doing anything more specific, it makes sense to follow the advice given in the Elasticsearch documentation on <a href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/setup-configuration.html">configuration</a>. In a nutshell:</p>
+
+<ul>
+<li>Set the maximum number of open file descriptors for the user running Elasticsearch to at least 32k or 64k.</li>
+<li>If possible, consider disabling swapping for the Elasticsearch process memory. Note, however, that in a virtualized environment this may not behave as expected.</li>
+<li>Set -Xms to the same value as -Xmx (the same result can be achieved by setting the ES_HEAP_SIZE environment variable).</li>
+<li>Leave some amount of physical memory unassigned so that the OS file system cache is free to use it for Lucene’s benefit. A rule of thumb is to have the Elasticsearch JVM use no more than half of the available memory.</li>
+</ul>
+
+  <div class="more">
+    <a href="/2014/05/12/ElasticSearch%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E9%80%9F%E6%9F%A5.html" class="btn">阅读更多...</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title">
     <a href="/2014/04/22/Docker%E4%B8%AD%E9%81%97%E5%A4%B1%E7%9A%84%E5%8C%85.html">Docker中遗失的包</a>
     <span class="date">2014-04-22</span>
   </h3>
@@ -336,44 +367,6 @@ RUN apt-get upgrade -y
 
   <div class="more">
     <a href="/2013/11/27/Docker%E5%8F%91%E5%B8%830.7%E7%89%88%E6%9C%AC.html" class="btn">阅读更多...</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title">
-    <a href="/2013/10/31/%E4%BB%80%E4%B9%88%E6%98%AFFlight%E7%BB%84%E4%BB%B6.html">什么是Flight组件</a>
-    <span class="date">2013-10-31</span>
-  </h3>
-  <p>Twitter Flight是基于组件的. 那么什么是组件了?
-组件是一块自我包含的原子的功能片段.
-一个组件由三个部分组成:</p>
-
-<ol>
-<li>组件定义</li>
-<li>组件工厂</li>
-<li>组件实例</li>
-</ol>
-
-<h2><a style="display: block;" name="组件定义" href="#组件定义"></a>组件定义</h2>
-
-<p>组件由一个命名方法定义. 包括定义事件监听器, 触发器, 默认配置和私有方法.
-组件没有public的方法或成员变量. 所有与外界的交互使用事件来完成.</p>
-
-<pre><code class="js">function heartbeat () {
-  this.defaultAttrs({
-    bpm: 80
-  });
-  this.beat = function () {
-    this.trigger('heartbeat'); // trigger heartbeat event
-  };
-  this.after('initialize', function () {
-    setInterval(this.beat.bind(this), 60000/bpm);
-  });
-}
-</code></pre>
-
-  <div class="more">
-    <a href="/2013/10/31/%E4%BB%80%E4%B9%88%E6%98%AFFlight%E7%BB%84%E4%BB%B6.html" class="btn">阅读更多...</a>
   </div>
 </div>
 
